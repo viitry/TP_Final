@@ -21,30 +21,78 @@ class _ConnexionPageState extends State<ConnexionPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Connexion'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(hintText: 'E-mail'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(hintText: 'Mot de passe'),
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: _connecter,
-              child: Text('Se connecter'),
-            ),
-          ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Connexion'),
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+              height: height * 0.5,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(217, 217, 217, 217),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const Text(
+                      'E-mail',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      style: TextStyle(height: 0.8),
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    const Text(
+                      'Mot de passe',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      style: TextStyle(height: 0.8),
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _connecter,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      child: Text('Se connecter'),
+                    ),
+                  ],
+                ),
+              )),
+        ));
   }
 }
