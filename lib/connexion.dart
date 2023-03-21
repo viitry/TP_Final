@@ -50,7 +50,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     TextField(
                       style: TextStyle(height: 0.8),
                       controller: _emailController,
@@ -62,7 +62,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     const Text(
                       'Mot de passe',
                       style: TextStyle(
@@ -70,7 +70,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     TextField(
                       style: TextStyle(height: 0.8),
                       controller: _emailController,
@@ -82,6 +82,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _connecter,
                       style: ElevatedButton.styleFrom(

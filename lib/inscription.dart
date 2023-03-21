@@ -28,43 +28,139 @@ class _InscriptionPageState extends State<InscriptionPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-          //title: Text('Inscription'),
-          ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _prenomController,
-              decoration: InputDecoration(hintText: 'Prénom'),
-            ),
-            TextField(
-              controller: _nomController,
-              decoration: InputDecoration(hintText: 'Nom'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(hintText: 'E-mail'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(hintText: 'Mot de passe'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _telephoneController,
-              decoration: InputDecoration(hintText: 'Numéro de téléphone'),
-              keyboardType: TextInputType.phone,
-            ),
-            ElevatedButton(
-              onPressed: _inscrire,
-              child: Text("S'inscrire"),
-            ),
-          ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Inscription'),
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(217, 217, 217, 217),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const Text(
+                          'Nom',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(height: 0.8),
+                          controller: _nomController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        const Text(
+                          'Prénom',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(height: 0.8),
+                          controller: _prenomController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        const Text(
+                          'E-mail',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(height: 0.8),
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        const Text(
+                          'Mot de passe',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(height: 0.8),
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        const Text(
+                          'Numero de telephone',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          style: TextStyle(height: 0.8),
+                          controller: _telephoneController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _inscrire,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            onPrimary: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          child: Text("S'inscrire"),
+                        ),
+                      ],
+                    )),
+              )),
+        ));
   }
 }
