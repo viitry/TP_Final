@@ -53,7 +53,7 @@ class AccueilPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset(
-                      '/assets/test/startseneguem.PNG',
+                      'assets/images/ngannou.PNG',
                       height: 200.0,
                     ),
                     SizedBox(height: 16.0),

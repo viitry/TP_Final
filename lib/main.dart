@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'inscription.dart';
 import 'connexion.dart';
 import 'accueil.dart';
+import 'annonce.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/inscription': (context) => InscriptionPage(),
         '/connexion': (context) => ConnexionPage(),
         '/accueil': (context) => AccueilPage(),
+        '/annonce': (context) => AnnoncePage(),
       },
     );
   }
@@ -53,6 +55,12 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/accueil');
               },
               child: Text('Accueil'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/annonce');
+              },
+              child: Text('Annonce'),
             )
           ],
         ),
