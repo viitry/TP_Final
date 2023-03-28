@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'inscription.dart';
 import 'connexion.dart';
+import 'accueil.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/inscription': (context) => InscriptionPage(),
         '/connexion': (context) => ConnexionPage(),
+        '/accueil': (context) => AccueilPage(),
       },
     );
   }
@@ -46,6 +48,12 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('Se connecter'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/accueil');
+              },
+              child: Text('Accueil'),
+            )
           ],
         ),
       ),
