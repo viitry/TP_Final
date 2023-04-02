@@ -3,6 +3,7 @@ import 'inscription.dart';
 import 'connexion.dart';
 import 'accueil.dart';
 import 'annonce.dart';
+import 'profil.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/connexion': (context) => ConnexionPage(),
         '/accueil': (context) => AccueilPage(),
         '/annonce': (context) => AnnoncePage(),
+        '/profil': (context) => ProfilPage(),
       },
     );
   }
@@ -61,6 +63,12 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/annonce');
               },
               child: Text('Annonce'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profil');
+              },
+              child: Text('Profil'),
             )
           ],
         ),
