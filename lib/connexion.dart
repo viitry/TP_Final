@@ -25,17 +25,26 @@ class _ConnexionPageState extends State<ConnexionPage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Connexion'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
+      backgroundColor: Color.fromRGBO(241, 249, 255, 1),
+      /*appBar: AppBar(
+        title: Text('Connexion'),
+      ),*/
+      body: Stack(
+        children: [
+          ClipPath(
+            clipper: MyClipper(),
+            child: Container(
+              color: Colors.indigo,
+              height: height * 0.45,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
               height: height * 0.5,
               decoration: BoxDecoration(
-                color: Color.fromARGB(217, 217, 217, 217),
-                borderRadius: BorderRadius.circular(8.0),
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -91,9 +100,36 @@ class _ConnexionPageState extends State<ConnexionPage> {
                       ),
                       child: Text('Se connecter'),
                     ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                   ],
                 ),
-              )),
-        ));
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MyClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height * 0.75);
+    path.quadraticBezierTo(
+        size.width / 4, size.height * 0.85, size.width / 2, size.height * 0.8);
+    path.quadraticBezierTo(
+        3 / 4 * size.width, size.height * 0.75, size.width, size.height * 0.9);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
