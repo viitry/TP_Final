@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, unused_local_variable, library_private_types_in_public_api, use_key_in_widget_constructors, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'connexion.dart';
@@ -9,17 +11,11 @@ class InscriptionPage extends StatefulWidget {
 }
 
 class _InscriptionPageState extends State<InscriptionPage> {
-  //final _prenomController = TextEditingController();
-  //final _nomController = TextEditingController();
-  //final _telephoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
 
   void _inscrire() {
-    //String prenom = _prenomController.text;
-    //String nom = _nomController.text;
-    //String telephone = _telephoneController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
     String confirmpassword = _confirmpasswordController.text;
@@ -33,7 +29,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
       body: SafeArea(
         child: Center(
@@ -47,19 +42,11 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   height: 150.0,
                 ),
                 SizedBox(height: 15),
-                // Bonjour
-                Text('Bienvenue !',
-                    style: GoogleFonts.bebasNeue(
-                      fontSize: 50,
-                    )),
+                Text('Bienvenue !', style: GoogleFonts.bebasNeue(fontSize: 50)),
                 SizedBox(height: 10),
-
-                Text(
-                  'Entrez vos informations pour vous inscrire!',
-                  style: GoogleFonts.imprima(fontSize: 18),
-                ),
+                Text('Entrez vos informations pour vous inscrire!',
+                    style: GoogleFonts.imprima(fontSize: 18)),
                 SizedBox(height: 35),
-
                 Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,10 +63,11 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               color: Color.fromARGB(55, 89, 119, 100),
                             ),
                           ),
+
+                          // Champ de texte pour l'email
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // champ de texte pour l'email
                               Padding(
                                 padding: EdgeInsets.only(top: 11.0),
                                 child: Padding(
@@ -129,10 +117,10 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                 ),
                               ),
 
-                              SizedBox(
-                                height: 27.0,
-                              ),
+                              // ignore: prefer_const_constructors
+                              SizedBox(height: 27.0),
 
+                              // Bouton S'inscrire
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
@@ -148,15 +136,16 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                         EdgeInsets.symmetric(horizontal: 30.0),
                                   ),
                                   child: Text(
-                                    'Sign up',
+                                    'S\'inscrire',
                                     style: GoogleFonts.imprima(
                                         color: Colors.white),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
+
+                              SizedBox(height: 5),
+
+                              // Texte "deja membre ? Connectez-vous"
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

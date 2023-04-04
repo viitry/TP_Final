@@ -111,6 +111,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                 height: 27.0,
                               ),
 
+                              // Bouton Se connecter
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
@@ -126,15 +127,18 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                         EdgeInsets.symmetric(horizontal: 30.0),
                                   ),
                                   child: Text(
-                                    'Sign in',
+                                    'Se connecter',
                                     style: GoogleFonts.imprima(
                                         color: Colors.white),
                                   ),
                                 ),
                               ),
+
                               SizedBox(
                                 height: 5,
                               ),
+
+                              // Texte Pas Membre Cree un compte
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -198,10 +202,6 @@ class MyClipper extends CustomClipper<Path> {
     return false;
   }
 }
-
-
-
-
 
 /*@override
   Widget build(BuildContext context) {
