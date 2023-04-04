@@ -108,7 +108,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                               ),
 
                               SizedBox(
-                                height: 40.0,
+                                height: 27.0,
                               ),
 
                               Padding(
