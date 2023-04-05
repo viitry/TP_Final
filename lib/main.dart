@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'package:flutter/material.dart';
 import 'inscription.dart';
 import 'connexion.dart';
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Mon application',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,6 +25,8 @@ class MyApp extends StatelessWidget {
         '/inscription': (context) => InscriptionPage(),
         '/connexion': (context) => ConnexionPage(),
         '/accueil': (context) => AccueilPage(),
+        //'/accueil': (context) => SearchSection(),
+        //'/accueil': (context) => RepasSection(),
         '/annonce': (context) => AnnoncePage(),
         '/profil': (context) => ProfilPage(),
       },
