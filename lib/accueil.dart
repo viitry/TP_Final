@@ -12,6 +12,7 @@ class AccueilPage extends StatelessWidget {
         child: Column(
           children: [
             SearchSection(),
+            CategorySection(),
             RepasSection(),
           ],
         ),
@@ -73,6 +74,67 @@ class SearchSection extends StatelessWidget {
   }
 }
 
+class CategorySection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, top: 25),
+      child: Container(
+        height: 45,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 3,
+              margin: const EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Color.fromRGBO(46, 88, 123, 100),
+              ),
+              child: Text("Pizza",
+                  style: GoogleFonts.imprima(color: Colors.white)),
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 3,
+              margin: const EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Color.fromRGBO(46, 88, 123, 100),
+              ),
+              child: Text("Burger",
+                  style: GoogleFonts.imprima(color: Colors.white)),
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 3,
+              margin: const EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Color.fromRGBO(46, 88, 123, 100),
+              ),
+              child: Text("Dessert",
+                  style: GoogleFonts.imprima(color: Colors.white)),
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 3,
+              margin: const EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Color.fromRGBO(46, 88, 123, 100),
+              ),
+              child: Text("Végétarien",
+                  style: GoogleFonts.imprima(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class RepasSection extends StatelessWidget {
   final List RepasList = [
     {
@@ -86,11 +148,11 @@ class RepasSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: [
           Container(
-            height: 50,
+            height: 25,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             ),
@@ -107,6 +169,7 @@ class RepasSection extends StatelessWidget {
 }
 
 class RepasCard extends StatelessWidget {
+  // ignore: non_constant_identifier_names
   final Map RepasData;
   RepasCard(this.RepasData);
   @override
@@ -149,21 +212,17 @@ class RepasCard extends StatelessWidget {
               children: [
                 Positioned(
                   bottom: 5,
-                  right: -15,
+                  right: 9,
                   child: MaterialButton(
-                      color: Color.fromRGBO(
-                        46,
-                        88,
-                        123,
-                        1,
-                      ),
-                      shape: CircleBorder(),
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.add_circle_outline,
-                        size: 39,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                      )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    color: Color.fromRGBO(46, 88, 123, 1),
+                    onPressed: _commander,
+                    child: Text(
+                      'Commander',
+                      style: GoogleFonts.imprima(color: Colors.white),
+                    ),
+                  ),
                 )
               ],
             ),
@@ -214,3 +273,5 @@ class RepasCard extends StatelessWidget {
     );
   }
 }
+
+void _commander() {}
