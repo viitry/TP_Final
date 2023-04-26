@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'RepasDetailsPage.dart';
+
 class AccueilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -174,101 +176,111 @@ class RepasCard extends StatelessWidget {
   RepasCard(this.RepasData);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 230,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(18),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200,
-            spreadRadius: 4,
-            blurRadius: 6,
-            offset: Offset(0, 3),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RepasDetailsPage(repasData: RepasData),
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            height: 140,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(18),
-                topRight: Radius.circular(18),
-              ),
-              image: DecorationImage(
-                image: AssetImage(
-                  RepasData['picture'],
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.all(10),
+        height: 230,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(18),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade200,
+              spreadRadius: 4,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 140,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
                 ),
-                fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: AssetImage(
+                    RepasData['picture'],
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 5,
+                    right: 9,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25)),
+                      color: Color.fromRGBO(46, 88, 123, 1),
+                      onPressed: _commander,
+                      child: Text(
+                        'Commander',
+                        style: GoogleFonts.imprima(color: Colors.white),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: 5,
-                  right: 9,
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    color: Color.fromRGBO(46, 88, 123, 1),
-                    onPressed: _commander,
-                    child: Text(
-                      'Commander',
-                      style: GoogleFonts.imprima(color: Colors.white),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    RepasData['title'],
+                    style: GoogleFonts.imprima(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  RepasData['title'],
-                  style: GoogleFonts.imprima(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
+                  Text(
+                    '\€' + RepasData['price'],
+                    style: GoogleFonts.imprima(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                Text(
-                  '\€' + RepasData['price'],
-                  style: GoogleFonts.imprima(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  RepasData['place'],
-                  style: GoogleFonts.nunito(
-                    fontSize: 14,
-                    color: Colors.grey[500],
-                    fontWeight: FontWeight.w400,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    RepasData['place'],
+                    style: GoogleFonts.nunito(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'connexion.dart';
 import 'accueil.dart';
 import 'annonce.dart';
 import 'profil.dart';
+import 'RepasInformation.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +28,13 @@ class MyApp extends StatelessWidget {
         '/accueil': (context) => AccueilPage(),
         //'/accueil': (context) => SearchSection(),
         //'/accueil': (context) => RepasSection(),
+        '/RepasInformation': (context) => RepasInformation(
+              allergenes: '',
+              heure: '',
+              informations: '',
+              jour: '',
+              prix: 2,
+            ),
         '/annonce': (context) => AnnoncePage(),
         '/profil': (context) => ProfilPage(),
       },
@@ -65,7 +73,7 @@ class MyHomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/annonce');
+                Navigator.pushNamed(context, '/RepasInformation');
               },
               child: Text('Annonce'),
             ),
