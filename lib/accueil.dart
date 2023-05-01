@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'RepasDetailsPage.dart';
+import 'profil.dart';
 
 class AccueilPage extends StatelessWidget {
   @override
@@ -35,6 +36,26 @@ class SearchSection extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilPage()),
+                          );
+                        },
+                        backgroundColor: Colors.grey,
+                        mini: true,
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                   padding: EdgeInsets.all(20.0),
                   child: Row(
@@ -62,6 +83,8 @@ class SearchSection extends StatelessWidget {
                           ),
                           filled: true,
                           fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10.0),
                         ),
                       ),
                     ),
@@ -81,57 +104,74 @@ class CategorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 25),
-      child: Container(
-        height: 45,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 3,
-              margin: const EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                color: Color.fromRGBO(46, 88, 123, 100),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(width: 10),
+              Text(
+                'Catégorie',
+                style: GoogleFonts.imprima(
+                    color: Color.fromRGBO(46, 88, 123, 100),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13),
               ),
-              child: Text("Pizza",
-                  style: GoogleFonts.imprima(color: Colors.white)),
+            ],
+          ),
+          SizedBox(
+            height: 45,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width / 3,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color.fromRGBO(46, 88, 123, 100),
+                  ),
+                  child: Text("Pizza",
+                      style: GoogleFonts.imprima(color: Colors.white)),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width / 3,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color.fromRGBO(46, 88, 123, 100),
+                  ),
+                  child: Text("Burger",
+                      style: GoogleFonts.imprima(color: Colors.white)),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width / 3,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color.fromRGBO(46, 88, 123, 100),
+                  ),
+                  child: Text("Dessert",
+                      style: GoogleFonts.imprima(color: Colors.white)),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width / 3,
+                  margin: const EdgeInsets.only(right: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Color.fromRGBO(46, 88, 123, 100),
+                  ),
+                  child: Text("Végétarien",
+                      style: GoogleFonts.imprima(color: Colors.white)),
+                ),
+              ],
             ),
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 3,
-              margin: const EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                color: Color.fromRGBO(46, 88, 123, 100),
-              ),
-              child: Text("Burger",
-                  style: GoogleFonts.imprima(color: Colors.white)),
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 3,
-              margin: const EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                color: Color.fromRGBO(46, 88, 123, 100),
-              ),
-              child: Text("Dessert",
-                  style: GoogleFonts.imprima(color: Colors.white)),
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 3,
-              margin: const EdgeInsets.only(right: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                color: Color.fromRGBO(46, 88, 123, 100),
-              ),
-              child: Text("Végétarien",
-                  style: GoogleFonts.imprima(color: Colors.white)),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -176,110 +216,113 @@ class RepasCard extends StatelessWidget {
   RepasCard(this.RepasData);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RepasDetailsPage(repasData: RepasData),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.all(10),
-        height: 230,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(18),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade200,
-              spreadRadius: 4,
-              blurRadius: 6,
-              offset: Offset(0, 3),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RepasDetailsPage(repasData: RepasData),
             ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Container(
-              height: 140,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(18),
-                  topRight: Radius.circular(18),
-                ),
-                image: DecorationImage(
-                  image: AssetImage(
-                    RepasData['picture'],
+          );
+        },
+        child: Container(
+          margin: EdgeInsets.all(10),
+          height: 230,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(18),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200,
+                spreadRadius: 4,
+                blurRadius: 6,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                height: 140,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
                   ),
-                  fit: BoxFit.cover,
+                  image: DecorationImage(
+                    image: AssetImage(
+                      RepasData['picture'],
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: 5,
+                      right: 9,
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        color: Color.fromRGBO(46, 88, 123, 1),
+                        onPressed: _commander,
+                        child: Text(
+                          'Commander',
+                          style: GoogleFonts.imprima(color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 5,
-                    right: 9,
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25)),
-                      color: Color.fromRGBO(46, 88, 123, 1),
-                      onPressed: _commander,
-                      child: Text(
-                        'Commander',
-                        style: GoogleFonts.imprima(color: Colors.white),
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      RepasData['title'],
+                      style: GoogleFonts.imprima(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    RepasData['title'],
-                    style: GoogleFonts.imprima(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
+                    Text(
+                      '\€' + RepasData['price'],
+                      style: GoogleFonts.imprima(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '\€' + RepasData['price'],
-                    style: GoogleFonts.imprima(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    RepasData['place'],
-                    style: GoogleFonts.nunito(
-                      fontSize: 14,
-                      color: Colors.grey[500],
-                      fontWeight: FontWeight.w400,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      RepasData['place'],
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
+              ),
+            ],
+          ),
         ),
       ),
     );
