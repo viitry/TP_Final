@@ -1,10 +1,10 @@
 // ignore_for_file: equal_keys_in_map
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'inscription.dart';
 import 'connexion.dart';
 import 'accueil.dart';
-import 'annonce.dart';
 import 'profil.dart';
 import 'RepasInformation.dart';
 
@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
               jour: '',
               prix: 2,
             ),
-        '/annonce': (context) => AnnoncePage(),
         '/profil': (context) => ProfilPage(),
       },
     );
@@ -70,12 +69,6 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/accueil');
               },
               child: Text('Accueil'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/RepasInformation');
-              },
-              child: Text('Annonce'),
             ),
             ElevatedButton(
               onPressed: () {

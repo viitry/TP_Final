@@ -1,9 +1,14 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, unused_local_variable, library_private_types_in_public_api, use_key_in_widget_constructors, unused_import
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'connexion.dart';
 import 'main.dart';
+import 'accueil.dart';
 
 class InscriptionPage extends StatefulWidget {
   @override
@@ -11,19 +16,55 @@ class InscriptionPage extends StatefulWidget {
 }
 
 class _InscriptionPageState extends State<InscriptionPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmpasswordController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController repeatpassword = TextEditingController();
 
-  void _inscrire() {
-    String email = _emailController.text;
-    String password = _passwordController.text;
-    String confirmpassword = _confirmpasswordController.text;
+  Future register(BuildContext cont) async {
+    if (username.text == "" ||
+        password.text == "" ||
+        repeatpassword.text == "") {
+      Fluttertoast.showToast(
+          msg: "Veuillez remplir tous les champs",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+    } else {
+      if (password.text == repeatpassword.text) {
+        var url = "http://192.168.1.94/flutter_application_1/php/register.php";
+        var response = await http.post(Uri.parse(url), body: {
+          "username": username.text,
+          "password": password.text,
+        });
 
-    // Enregistrer les données dans une base de données ou un autre système de stockage
-
-    // Naviguer vers la page de connexion
-    Navigator.pop(context);
+        var data = json.decode(response.body);
+        if (data == "success") {
+          {
+            Fluttertoast.showToast(
+                msg: "Vous avez cree votre compte !",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                fontSize: 16.0);
+          }
+          Navigator.push(
+              cont, MaterialPageRoute(builder: (context) => AccueilPage()));
+        } else {
+          Fluttertoast.showToast(
+              msg: "La combinaison n'existe pas ",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              fontSize: 16.0);
+        }
+      } else {
+        {
+          Fluttertoast.showToast(
+              msg: "la combinaison n'existe pas",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              fontSize: 16.0);
+        }
+      }
+    }
   }
 
   @override
@@ -74,7 +115,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 20.0),
                                   child: TextField(
-                                    controller: _emailController,
+                                    controller: username,
                                     decoration: InputDecoration(
                                       isDense: true,
                                       hintText: 'Email',
@@ -90,7 +131,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: TextField(
-                                  controller: _passwordController,
+                                  controller: password,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -106,7 +147,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: TextField(
-                                  controller: _confirmpasswordController,
+                                  controller: repeatpassword,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -125,7 +166,9 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
                                 child: TextButton(
-                                  onPressed: _inscrire,
+                                  onPressed: () {
+                                    register(context);
+                                  },
                                   style: TextButton.styleFrom(
                                     backgroundColor:
                                         Color.fromRGBO(46, 88, 123, 100),

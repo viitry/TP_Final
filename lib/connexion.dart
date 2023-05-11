@@ -1,28 +1,66 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, library_private_types_in_public_api, use_build_context_synchronously
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/inscription.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'accueil.dart';
 
 class ConnexionPage extends StatefulWidget {
+  const ConnexionPage({super.key});
+
   //late final VoidCallback showInscriptionPage;
   @override
   _ConnexionPageState createState() => _ConnexionPageState();
 }
 
 class _ConnexionPageState extends State<ConnexionPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
 
-  void _connecter() {
-    String email = _emailController.text;
-    String password = _passwordController.text;
+  Future login(BuildContext cont) async {
+    if (username.text == "" || password.text == "") {
+      Fluttertoast.showToast(
+          msg: "Veuillez remplir tous les champs",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0);
+    } else {
+      var url = "http://192.168.1.94/flutter_application_1/php/login.php";
+      var response = await http.post(Uri.parse(url), body: {
+        "username": username.text,
+        "password": password.text,
+      });
+
+      var data = json.decode(response.body);
+      if (data == "success") {
+        Navigator.push(
+            cont, MaterialPageRoute(builder: (context) => AccueilPage()));
+      } else {
+        Fluttertoast.showToast(
+            msg: "La combinaison n'existe pas ",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0);
+      }
+    }
+  }
+
+  //final _emailController = TextEditingController();
+  //final _passwordController = TextEditingController();
+
+  /*void _connecter() {
+    // String email = _emailController.text;
+    //String password = _passwordController.text;
 
     // Vérifier les données dans une base de données ou un autre système de stockage
 
     // Naviguer vers la page d'accueil
     Navigator.pop(context);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +118,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 20.0),
                                   child: TextField(
-                                    controller: _emailController,
+                                    controller: username,
                                     decoration: InputDecoration(
                                       isDense: true,
                                       hintText: 'Email',
@@ -96,7 +134,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: TextField(
-                                  controller: _passwordController,
+                                  controller: password,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -116,7 +154,6 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
                                 child: TextButton(
-                                  onPressed: _connecter,
                                   style: TextButton.styleFrom(
                                     backgroundColor:
                                         Color.fromRGBO(46, 88, 123, 100),
@@ -126,6 +163,9 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 30.0),
                                   ),
+                                  onPressed: () {
+                                    login(context);
+                                  },
                                   child: Text(
                                     'Se connecter',
                                     style: GoogleFonts.imprima(
