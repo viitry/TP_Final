@@ -1,4 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilPage extends StatefulWidget {
   @override
@@ -6,12 +13,36 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  final _prenomController = TextEditingController(text: "John");
-  final _nomController = TextEditingController(text: "Doe");
+  TextEditingController _usernameController = TextEditingController();
+
+  Future getUserInfo(String username) async {
+    var url = 'http://192.168.1.94/flutter_application_1/php/get_user_info.php';
+    var response = await http.post(Uri.parse(url), body: {
+      "username": username,
+    });
+
+    if (response.statusCode == 200) {
+      // Si la requête est réussie, récupérer les informations de l'utilisateur
+      final user = jsonDecode(response.body);
+      setState(() {
+        _usernameController.text = user['username'];
+      });
+    } else {
+      // Si la requête échoue, afficher un message d'erreur
+      throw Exception('Failed to load user info');
+    }
+  }
+
+  Future<String> _getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('username') ?? '';
+    return username;
+  }
+  /*final _nomController = TextEditingController(text: "Doe");
   final _emailController = TextEditingController(text: "johndoe@gmail.com");
   final _passwordController = TextEditingController(text: "********");
   final _telephoneController = TextEditingController(text: "+1 555-555-5555");
-  final _adresseController = TextEditingController(text: "1234 Main St");
+  final _adresseController = TextEditingController(text: "1234 Main St");*/
 
   bool _isEditing = false;
 
@@ -22,6 +53,15 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _getUsername().then((value) {
+      setState(() {
+        _usernameController.text = value;
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +81,7 @@ class _ProfilPageState extends State<ProfilPage> {
             children: [
               TextFormField(
                 enabled: _isEditing,
-                controller: _prenomController,
+                controller: _usernameController,
                 decoration: InputDecoration(
                   labelText: 'Prénom',
                 ),
@@ -49,7 +89,7 @@ class _ProfilPageState extends State<ProfilPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 enabled: _isEditing,
-                controller: _nomController,
+                //controller: _nomController,
                 decoration: InputDecoration(
                   labelText: 'Nom',
                 ),
@@ -57,7 +97,7 @@ class _ProfilPageState extends State<ProfilPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 enabled: _isEditing,
-                controller: _emailController,
+                //controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -66,7 +106,7 @@ class _ProfilPageState extends State<ProfilPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 enabled: _isEditing,
-                controller: _passwordController,
+                //controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Mot de passe',
@@ -75,7 +115,7 @@ class _ProfilPageState extends State<ProfilPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 enabled: _isEditing,
-                controller: _telephoneController,
+                //controller: _telephoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   labelText: 'Téléphone',
@@ -84,7 +124,7 @@ class _ProfilPageState extends State<ProfilPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 enabled: _isEditing,
-                controller: _adresseController,
+                //controller: _adresseController,
                 maxLines: 3,
                 decoration: InputDecoration(
                   labelText: 'Adresse',

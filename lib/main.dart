@@ -7,6 +7,7 @@ import 'connexion.dart';
 import 'accueil.dart';
 import 'profil.dart';
 import 'RepasInformation.dart';
+import 'test.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
               prix: 2,
             ),
         '/profil': (context) => ProfilPage(),
+        '/test': (context) => TestPage(),
       },
     );
   }
@@ -75,6 +77,12 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pushNamed(context, '/profil');
               },
               child: Text('Profil'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/test');
+              },
+              child: Text('test'),
             )
           ],
         ),

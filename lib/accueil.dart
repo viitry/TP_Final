@@ -1,10 +1,29 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_string_escapes, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/database_helper.dart';
 
 import 'RepasDetailsPage.dart';
 import 'profil.dart';
+
+/*Future<Map<String, dynamic>> getLastUser() async {
+  final response = await http.get(Uri.parse(
+      'http://192.168.1.94/flutter_application_1/php/get_last_user.php'));
+
+  if (response.statusCode == 200) {
+    final responseBody = json.decode(response.body);
+
+    if (responseBody is Map<String, dynamic>) {
+      return responseBody;
+    }
+  }
+
+  throw Exception('Failed to get last user.');
+}*/
 
 class AccueilPage extends StatelessWidget {
   @override
@@ -17,6 +36,7 @@ class AccueilPage extends StatelessWidget {
             SearchSection(),
             CategorySection(),
             RepasSection(),
+            //YourScreenName(),
           ],
         ),
       ),
@@ -24,6 +44,40 @@ class AccueilPage extends StatelessWidget {
     );
   }
 }
+
+/*class YourScreenName extends StatefulWidget {
+  @override
+  _YourScreenNameState createState() => _YourScreenNameState();
+}
+
+class _YourScreenNameState extends State<YourScreenName> {
+  String _username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getLastUser();
+  }
+
+  Future<void> _getLastUser() async {
+    final user = await DatabaseHelper.instance.getLastUser();
+    setState(() {
+      _username = user['username'];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Bienvenue, $_username!',
+          style: TextStyle(fontSize: 10.0),
+        ),
+      ),
+    );
+  }
+}*/
 
 class SearchSection extends StatelessWidget {
   @override
@@ -323,6 +377,40 @@ class RepasCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class YourScreenName extends StatefulWidget {
+  @override
+  _YourScreenNameState createState() => _YourScreenNameState();
+}
+
+class _YourScreenNameState extends State<YourScreenName> {
+  String _username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getLastUser();
+  }
+
+  Future<void> _getLastUser() async {
+    final user = await DatabaseHelper.instance.getLastUser();
+    setState(() {
+      _username = user['username'];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Bienvenue, $_username!',
+          style: TextStyle(fontSize: 10.0),
         ),
       ),
     );
