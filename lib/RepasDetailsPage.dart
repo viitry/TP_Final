@@ -12,6 +12,7 @@ class RepasDetailsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
+          color: Colors.green,
           margin: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,6 +55,7 @@ class RepasDetailsPage extends StatelessWidget {
                 ),
               ),
               Container(
+                color: Colors.blue,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,10 +71,208 @@ class RepasDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 10),
               Expanded(
-                child: Container(),
+                child: Container(
+                  color: Colors.red,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: Text(
+                          'Description',
+                          style: GoogleFonts.imprima(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          repasData['description'],
+                          style: GoogleFonts.imprima(
+                            fontSize: 14,
+                            color: Color.fromRGBO(46, 88, 123, 1),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 100,
+                        color: Color.fromARGB(255, 41, 43, 165),
+                        margin: EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              child: Text(
+                                'Information allergie bla bla',
+                                style: GoogleFonts.imprima(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(
+                                'Oeuf Noix',
+                                style: GoogleFonts.imprima(
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(46, 88, 123, 1),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 100,
+                        color: Color.fromARGB(255, 41, 43, 165),
+                        margin: EdgeInsets.only(right: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              child: Text(
+                                'Informations supplémentaires',
+                                style: GoogleFonts.imprima(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(
+                                '300 grammes',
+                                style: GoogleFonts.imprima(
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(46, 88, 123, 1),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Color.fromARGB(255, 41, 43, 165),
+                  margin: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: Text(
+                          'Choisir jour',
+                          style: GoogleFonts.imprima(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'L',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'M',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'Me',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'J',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'V',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'S',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              child: Text(
+                                'D',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Container(
+                color: Colors.white,
                 margin: EdgeInsets.only(bottom: 20),
                 child: Center(
                   child: MaterialButton(
@@ -87,7 +287,7 @@ class RepasDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

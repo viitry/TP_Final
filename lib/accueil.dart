@@ -29,6 +29,7 @@ class AccueilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
       body: SingleChildScrollView(
         child: Column(
@@ -44,40 +45,6 @@ class AccueilPage extends StatelessWidget {
     );
   }
 }
-
-/*class YourScreenName extends StatefulWidget {
-  @override
-  _YourScreenNameState createState() => _YourScreenNameState();
-}
-
-class _YourScreenNameState extends State<YourScreenName> {
-  String _username = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _getLastUser();
-  }
-
-  Future<void> _getLastUser() async {
-    final user = await DatabaseHelper.instance.getLastUser();
-    setState(() {
-      _username = user['username'];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Bienvenue, $_username!',
-          style: TextStyle(fontSize: 10.0),
-        ),
-      ),
-    );
-  }
-}*/
 
 class SearchSection extends StatelessWidget {
   @override
@@ -239,6 +206,9 @@ class RepasSection extends StatelessWidget {
       'review': 36,
       'picture': 'assets/images/repas.jpeg',
       'price': '3',
+      'allergies': 'Oeuf' 'Noix',
+      'description':
+          'Un plat vraiment delicieux, cest super bon miam miam encore jai faim, Un plat vraiment delicieux, cest super bon miam miam encore jai faim Un plat vraiment delicieux, cest super bon miam miam encore jai faim',
     },
   ];
   @override
@@ -265,118 +235,136 @@ class RepasSection extends StatelessWidget {
 }
 
 class RepasCard extends StatelessWidget {
-  // ignore: non_constant_identifier_names
   final Map RepasData;
   RepasCard(this.RepasData);
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RepasDetailsPage(repasData: RepasData),
-            ),
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.all(10),
-          height: 230,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(18),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade200,
-                spreadRadius: 4,
-                blurRadius: 6,
-                offset: Offset(0, 3),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RepasDetailsPage(repasData: RepasData),
           ),
-          child: Column(
-            children: [
-              Container(
-                height: 140,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(18),
-                    topRight: Radius.circular(18),
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      RepasData['picture'],
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.all(10),
+        height: 230,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(18),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade200,
+              spreadRadius: 4,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 140,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
                 ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: 5,
-                      right: 9,
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        color: Color.fromRGBO(46, 88, 123, 1),
-                        onPressed: _commander,
-                        child: Text(
-                          'Commander',
-                          style: GoogleFonts.imprima(color: Colors.white),
-                        ),
-                      ),
-                    )
-                  ],
+                image: DecorationImage(
+                  image: AssetImage(
+                    RepasData['picture'],
+                  ),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      RepasData['title'],
-                      style: GoogleFonts.imprima(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 5,
+                    right: 9,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      color: Color.fromRGBO(46, 88, 123, 1),
+                      onPressed: _commander,
+                      child: Text(
+                        'Commander',
+                        style: GoogleFonts.imprima(color: Colors.white),
                       ),
                     ),
-                    Text(
-                      '\€' + RepasData['price'],
-                      style: GoogleFonts.imprima(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
+                  )
+                ],
               ),
-              Container(
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    RepasData['title'],
+                    style: GoogleFonts.imprima(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    '\€' + RepasData['price'],
+                    style: GoogleFonts.imprima(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    RepasData['place'],
+                    style: GoogleFonts.nunito(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      RepasData['place'],
-                      style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.w400,
+                    Flexible(
+                      child: Text(
+                        RepasData['description'],
+                        style: GoogleFonts.nunito(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
-              ),
-            ],
-          ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 3, 10, 0),
+            ),
+          ],
         ),
       ),
     );
