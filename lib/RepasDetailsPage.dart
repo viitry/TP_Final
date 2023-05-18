@@ -194,7 +194,7 @@ class RepasDetailsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: Text(
-                          'Choisir jour',
+                          'Jour disponible',
                           style: GoogleFonts.imprima(
                             fontSize: 16,
                             color: Colors.black,
