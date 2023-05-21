@@ -9,6 +9,7 @@ import 'package:flutter_application_1/database_helper.dart';
 
 import 'RepasDetailsPage.dart';
 import 'profil.dart';
+import 'publier.dart';
 
 /*Future<Map<String, dynamic>> getLastUser() async {
   final response = await http.get(Uri.parse(
@@ -31,15 +32,46 @@ class AccueilPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchSection(),
-            CategorySection(),
-            RepasSection(),
-            //YourScreenName(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SearchSection(),
+                CategorySection(),
+                RepasSection(),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilPage()),
+                );
+              },
+              backgroundColor: Colors.red,
+              child: Icon(Icons.favorite, color: Colors.white),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PublierPage()),
+                );
+              },
+              backgroundColor: Colors.blue,
+              child: Icon(Icons.add, color: Colors.white),
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(),
     );
@@ -61,7 +93,7 @@ class SearchSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: FloatingActionButton(
                         onPressed: () {
                           Navigator.push(
@@ -78,34 +110,33 @@ class SearchSection extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
                         'assets/images/logo.jpeg',
-                        height: 125.0,
+                        height: 120.0,
                       ),
-                      SizedBox(height: 20),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Container(
-                    height: 38,
+                    height: 40,
                     child: Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'Rechercher un plat, une ville ...',
-                          hintStyle: GoogleFonts.imprima(fontSize: 13),
+                          hintStyle: GoogleFonts.imprima(fontSize: 12),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
                           fillColor: Colors.white,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10.0),
+                              horizontal: 20, vertical: 10.0),
                         ),
                       ),
                     ),
@@ -134,12 +165,14 @@ class CategorySection extends StatelessWidget {
               Text(
                 'Catégorie',
                 style: GoogleFonts.imprima(
-                    color: Color.fromRGBO(46, 88, 123, 100),
+                    color: Color.fromRGBO(0, 0, 0, 0.612),
                     fontWeight: FontWeight.bold,
-                    fontSize: 13),
+                    fontSize: 16),
               ),
+              SizedBox(height: 5),
             ],
           ),
+          SizedBox(height: 10),
           SizedBox(
             height: 45,
             child: ListView(
@@ -150,44 +183,48 @@ class CategorySection extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 3,
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: Color.fromRGBO(46, 88, 123, 100),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                    color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Pizza",
-                      style: GoogleFonts.imprima(color: Colors.white)),
+                      style: GoogleFonts.imprima(color: Colors.black)),
                 ),
                 Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width / 3,
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: Color.fromRGBO(46, 88, 123, 100),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                    color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Burger",
-                      style: GoogleFonts.imprima(color: Colors.white)),
+                      style: GoogleFonts.imprima(color: Colors.black)),
                 ),
                 Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width / 3,
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: Color.fromRGBO(46, 88, 123, 100),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                    color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Dessert",
-                      style: GoogleFonts.imprima(color: Colors.white)),
+                      style: GoogleFonts.imprima(color: Colors.black)),
                 ),
                 Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width / 3,
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: Color.fromRGBO(46, 88, 123, 100),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                    color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Végétarien",
-                      style: GoogleFonts.imprima(color: Colors.white)),
+                      style: GoogleFonts.imprima(color: Colors.black)),
                 ),
               ],
             ),

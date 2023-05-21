@@ -12,7 +12,7 @@ class RepasDetailsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: Colors.green,
+          //color: Colors.green,
           margin: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,7 +55,7 @@ class RepasDetailsPage extends StatelessWidget {
                 ),
               ),
               Container(
-                color: Colors.blue,
+                //color: Colors.blue,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +74,7 @@ class RepasDetailsPage extends StatelessWidget {
               SizedBox(height: 10),
               Expanded(
                 child: Container(
-                  color: Colors.red,
+                  //color: Colors.red,
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +112,7 @@ class RepasDetailsPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         height: 100,
-                        color: Color.fromARGB(255, 41, 43, 165),
+                        //color: Color.fromARGB(255, 41, 43, 165),
                         margin: EdgeInsets.only(left: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +148,7 @@ class RepasDetailsPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         height: 100,
-                        color: Color.fromARGB(255, 41, 43, 165),
+                        //color: Color.fromARGB(255, 228, 227, 227),
                         margin: EdgeInsets.only(right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +186,7 @@ class RepasDetailsPage extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  color: Color.fromARGB(255, 41, 43, 165),
+                  //color: Color.fromARGB(255, 228, 227, 227),
                   margin: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
