@@ -36,9 +36,6 @@ class _ConnexionPageState extends State<ConnexionPage> {
 
       var data = json.decode(response.body);
       if (data != "error") {
-        // Utilisation du token reçu pour l'authentification
-        var token = data;
-        // Effectuer des actions supplémentaires si nécessaire
         Navigator.push(
             cont, MaterialPageRoute(builder: (context) => AccueilPage()));
       } else {

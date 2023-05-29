@@ -8,7 +8,7 @@ import 'package:flutter_application_1/database_helper.dart';
 import 'RepasDetailsPage.dart';
 import 'profil.dart';
 
-class FoodApp extends StatefulWidget {
+/*class FoodApp extends StatefulWidget {
   @override
   _FoodAppState createState() => _FoodAppState();
 }
@@ -194,8 +194,9 @@ class RepasCard extends StatelessWidget {
 }
 
 void _commander() {}
+*/
 
-/*class TestPage extends StatefulWidget {
+class TestPage extends StatefulWidget {
   @override
   _TestPageState createState() => _TestPageState();
 }
@@ -203,7 +204,7 @@ void _commander() {}
 class _TestPageState extends State<TestPage> {
   Future<Map<String, dynamic>> getLastUser() async {
     var response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/get_last_user.php'));
+        'http://192.168.1.94/flutter_application_1/php/get_user.php'));
 
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
@@ -242,5 +243,4 @@ class _TestPageState extends State<TestPage> {
       ),
     );
   }
-}*/
-
+}

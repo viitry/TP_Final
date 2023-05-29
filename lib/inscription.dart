@@ -20,7 +20,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
   TextEditingController password = TextEditingController();
   TextEditingController repeatpassword = TextEditingController();
 
-  Future register(BuildContext cont) async {
+  Future register(BuildContext context) async {
     if (username.text == "" ||
         password.text == "" ||
         repeatpassword.text == "") {
@@ -38,19 +38,15 @@ class _InscriptionPageState extends State<InscriptionPage> {
         });
 
         var data = json.decode(response.body);
-        if (data['status'] == "success") {
-          String token =
-              data['token']; // Récupérer le token généré depuis la réponse
+        if (data == "success") {
           Fluttertoast.showToast(
               msg: "Vous avez créé votre compte !",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               fontSize: 16.0);
 
-          // Enregistrer le token dans le stockage local (par exemple, Shared Preferences)
-
           Navigator.push(
-              cont, MaterialPageRoute(builder: (context) => AccueilPage()));
+              context, MaterialPageRoute(builder: (context) => AccueilPage()));
         } else {
           Fluttertoast.showToast(
               msg: "La combinaison n'existe pas",
