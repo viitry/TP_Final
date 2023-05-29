@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               prix: 2,
             ),
         '/profil': (context) => ProfilPage(),
-        '/test': (context) => TestPage(),
+        '/test': (context) => FoodApp(),
       },
     );
   }

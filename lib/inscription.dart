@@ -38,31 +38,32 @@ class _InscriptionPageState extends State<InscriptionPage> {
         });
 
         var data = json.decode(response.body);
-        if (data == "success") {
-          {
-            Fluttertoast.showToast(
-                msg: "Vous avez cree votre compte !",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                fontSize: 16.0);
-          }
+        if (data['status'] == "success") {
+          String token =
+              data['token']; // Récupérer le token généré depuis la réponse
+          Fluttertoast.showToast(
+              msg: "Vous avez créé votre compte !",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              fontSize: 16.0);
+
+          // Enregistrer le token dans le stockage local (par exemple, Shared Preferences)
+
           Navigator.push(
               cont, MaterialPageRoute(builder: (context) => AccueilPage()));
         } else {
           Fluttertoast.showToast(
-              msg: "La combinaison n'existe pas ",
+              msg: "La combinaison n'existe pas",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               fontSize: 16.0);
         }
       } else {
-        {
-          Fluttertoast.showToast(
-              msg: "la combinaison n'existe pas",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16.0);
-        }
+        Fluttertoast.showToast(
+            msg: "La combinaison n'existe pas",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0);
       }
     }
   }
@@ -232,144 +233,3 @@ class _InscriptionPageState extends State<InscriptionPage> {
     );
   }
 }
-
-
-/* 
-@override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Inscription'),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(217, 217, 217, 217),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        const Text(
-                          'Nom',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(height: 0.8),
-                          controller: _nomController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        const Text(
-                          'Prénom',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(height: 0.8),
-                          controller: _prenomController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        const Text(
-                          'E-mail',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(height: 0.8),
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        const Text(
-                          'Mot de passe',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(height: 0.8),
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        const Text(
-                          'Numero de telephone',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          style: TextStyle(height: 0.8),
-                          controller: _telephoneController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: _inscrire,
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          child: Text("S'inscrire"),
-                        ),
-                      ],
-                    )),
-              )),
-        ));
-  }
-*/

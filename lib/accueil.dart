@@ -11,65 +11,42 @@ import 'RepasDetailsPage.dart';
 import 'profil.dart';
 import 'publier.dart';
 
-/*Future<Map<String, dynamic>> getLastUser() async {
-  final response = await http.get(Uri.parse(
-      'http://192.168.1.94/flutter_application_1/php/get_last_user.php'));
-
-  if (response.statusCode == 200) {
-    final responseBody = json.decode(response.body);
-
-    if (responseBody is Map<String, dynamic>) {
-      return responseBody;
-    }
-  }
-
-  throw Exception('Failed to get last user.');
-}*/
-
 class AccueilPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
-      body: Stack(
+      body: ListView(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SearchSection(),
-                CategorySection(),
-                RepasSection(),
-              ],
-            ),
+          SearchSection(),
+          CategorySection(),
+          RepasSection(),
+        ],
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilPage()),
+              );
+            },
+            backgroundColor: Colors.red,
+            mini: true,
+            child: Icon(Icons.favorite, color: Colors.white),
           ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilPage()),
-                );
-              },
-              backgroundColor: Colors.red,
-              child: Icon(Icons.favorite, color: Colors.white),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PublierPage()),
-                );
-              },
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.add, color: Colors.white),
-            ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PublierPage()),
+              );
+            },
+            backgroundColor: Colors.blue,
+            child: Icon(Icons.add, color: Colors.white),
           ),
         ],
       ),
@@ -82,68 +59,65 @@ class SearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 255,
       child: SafeArea(
         child: Center(
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilPage()),
-                          );
-                        },
-                        backgroundColor: Colors.grey,
-                        mini: true,
-                        child: Icon(Icons.person),
-                      ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilPage()),
+                        );
+                      },
+                      backgroundColor: Colors.grey,
+                      mini: true,
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/images/logo.jpeg',
+                      height: 120.0,
                     ),
                   ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/logo.jpeg',
-                        height: 120.0,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: Container(
-                    height: 40,
-                    child: Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Rechercher un plat, une ville ...',
-                          hintStyle: GoogleFonts.imprima(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Container(
+                  height: 40,
+                  child: Flexible(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Rechercher un plat, une ville ...',
+                        hintStyle: GoogleFonts.imprima(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10.0),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -151,11 +125,12 @@ class SearchSection extends StatelessWidget {
   }
 }
 
+// ignore: use_key_in_widget_constructors
 class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 25),
+      padding: const EdgeInsets.only(left: 10, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -172,9 +147,9 @@ class CategorySection extends StatelessWidget {
               SizedBox(height: 5),
             ],
           ),
-          SizedBox(height: 10),
-          SizedBox(
-            height: 45,
+          //SizedBox(height: 10),
+          Container(
+            height: 40,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
@@ -235,45 +210,58 @@ class CategorySection extends StatelessWidget {
   }
 }
 
-class RepasSection extends StatelessWidget {
-  final List RepasList = [
-    {
-      'title': 'Pasta very good',
-      'place': 'Paris, 16eme',
-      'review': 36,
-      'picture': 'assets/images/repas.jpeg',
-      'price': '3',
-      'allergies': 'Oeuf' 'Noix',
-      'description':
-          'Un plat vraiment delicieux, cest super bon miam miam encore jai faim, Un plat vraiment delicieux, cest super bon miam miam encore jai faim Un plat vraiment delicieux, cest super bon miam miam encore jai faim',
-    },
-  ];
+class RepasSection extends StatefulWidget {
+  @override
+  _RepasSectionState createState() => _RepasSectionState();
+}
+
+class _RepasSectionState extends State<RepasSection> {
+  List<Map<String, dynamic>> repasList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRepasData();
+  }
+
+  Future<void> fetchRepasData() async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.1.94/flutter_application_1/php/loadproducts.php'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+
+      setState(() {
+        repasList =
+            data.map((repas) => Map<String, dynamic>.from(repas)).toList();
+      });
+    } else {
+      print('Failed to fetch repas data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        children: [
-          Container(
-            height: 25,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            ),
-          ),
-          Column(
-            children: RepasList.map((repas) {
-              return RepasCard(repas);
-            }).toList(),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: repasList.length,
+          itemBuilder: (context, index) {
+            final repas = repasList[index];
+            return RepasCard(repas);
+          },
+        ),
+      ],
     );
   }
 }
 
 class RepasCard extends StatelessWidget {
-  final Map RepasData;
-  RepasCard(this.RepasData);
+  final Map<String, dynamic> repasData;
+
+  RepasCard(this.repasData);
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +270,7 @@ class RepasCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => RepasDetailsPage(repasData: RepasData),
+            builder: (context) => RepasDetailsPage(repasData: repasData),
           ),
         );
       },
@@ -315,7 +303,7 @@ class RepasCard extends StatelessWidget {
                 ),
                 image: DecorationImage(
                   image: AssetImage(
-                    RepasData['picture'],
+                    repasData['picture'] ?? '',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -346,14 +334,14 @@ class RepasCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    RepasData['title'],
+                    repasData['product_titre'] ?? '',
                     style: GoogleFonts.imprima(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                   Text(
-                    '\€' + RepasData['price'],
+                    '\€${repasData['product_prix'] ?? ''}',
                     style: GoogleFonts.imprima(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -368,7 +356,7 @@ class RepasCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    RepasData['place'],
+                    repasData['product_lieu'] ?? '',
                     style: GoogleFonts.nunito(
                       fontSize: 14,
                       color: Colors.grey[500],
@@ -386,7 +374,7 @@ class RepasCard extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        RepasData['description'],
+                        repasData['product_desc'] ?? '',
                         style: GoogleFonts.nunito(
                           fontSize: 14,
                           color: Colors.black,
@@ -408,7 +396,7 @@ class RepasCard extends StatelessWidget {
   }
 }
 
-class YourScreenName extends StatefulWidget {
+/*class YourScreenName extends StatefulWidget {
   @override
   _YourScreenNameState createState() => _YourScreenNameState();
 }
@@ -440,6 +428,6 @@ class _YourScreenNameState extends State<YourScreenName> {
       ),
     );
   }
-}
+}*/
 
 void _commander() {}

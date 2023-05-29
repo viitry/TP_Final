@@ -202,7 +202,7 @@ class RepasDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
@@ -210,7 +210,7 @@ class RepasDetailsPage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'L',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -218,7 +218,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'M',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -226,7 +226,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'Me',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -234,7 +234,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'J',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -242,7 +242,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'V',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -250,7 +250,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'S',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
@@ -258,7 +258,7 @@ class RepasDetailsPage extends StatelessWidget {
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: Text(
+                              child: const Text(
                                 'D',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),

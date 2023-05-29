@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -14,18 +12,28 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   TextEditingController _usernameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
 
-  Future getUserInfo(String username) async {
-    var url = 'http://192.168.1.94/flutter_application_1/php/get_user_info.php';
+  Future getUserInfo(String token) async {
+    var url = 'http://192.168.1.94/flutter_application_1/php/getUserInfo.php';
     var response = await http.post(Uri.parse(url), body: {
-      "username": username,
+      "token": token,
     });
 
     if (response.statusCode == 200) {
       // Si la requête est réussie, récupérer les informations de l'utilisateur
-      final user = jsonDecode(response.body);
+      final user = jsonDecode(response.body) as Map<String, dynamic>;
+
       setState(() {
         _usernameController.text = user['username'];
+        _nameController.text = user['name'];
+        _emailController.text = user['email'];
+        _phoneController.text = user['phone'];
+        _addressController.text = user['address'];
       });
     } else {
       // Si la requête échoue, afficher un message d'erreur
@@ -33,105 +41,83 @@ class _ProfilPageState extends State<ProfilPage> {
     }
   }
 
-  Future<String> _getUsername() async {
+  Future<String> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('username') ?? '';
-    return username;
-  }
-  /*final _nomController = TextEditingController(text: "Doe");
-  final _emailController = TextEditingController(text: "johndoe@gmail.com");
-  final _passwordController = TextEditingController(text: "********");
-  final _telephoneController = TextEditingController(text: "+1 555-555-5555");
-  final _adresseController = TextEditingController(text: "1234 Main St");*/
-
-  bool _isEditing = false;
-
-  void _toggleEdit() {
-    setState(() {
-      _isEditing = !_isEditing;
-    });
+    final token = prefs.getString('token') ?? '';
+    return token;
   }
 
   @override
   void initState() {
     super.initState();
-    _getUsername().then((value) {
-      setState(() {
-        _usernameController.text = value;
-      });
+    _getToken().then((value) {
+      if (value.isNotEmpty) {
+        getUserInfo(value);
+      }
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
-        actions: [
-          IconButton(
-            onPressed: _toggleEdit,
-            icon: Icon(_isEditing ? Icons.save : Icons.edit),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                enabled: _isEditing,
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Prénom',
-                ),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFormField(
+              enabled: false,
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: 'Nom d\'utilisateur',
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                enabled: _isEditing,
-                //controller: _nomController,
-                decoration: InputDecoration(
-                  labelText: 'Nom',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              _usernameController.text,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                enabled: _isEditing,
-                //controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              enabled: false,
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Nom',
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                enabled: _isEditing,
-                //controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Mot de passe',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              enabled: false,
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                enabled: _isEditing,
-                //controller: _telephoneController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  labelText: 'Téléphone',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              enabled: false,
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'Téléphone',
               ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                enabled: _isEditing,
-                //controller: _adresseController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  labelText: 'Adresse',
-                ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              enabled: false,
+              controller: _addressController,
+              maxLines: 3,
+              decoration: InputDecoration(
+                labelText: 'Adresse',
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

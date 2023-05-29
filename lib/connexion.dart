@@ -12,7 +12,6 @@ import 'accueil.dart';
 class ConnexionPage extends StatefulWidget {
   const ConnexionPage({super.key});
 
-  //late final VoidCallback showInscriptionPage;
   @override
   _ConnexionPageState createState() => _ConnexionPageState();
 }
@@ -36,7 +35,10 @@ class _ConnexionPageState extends State<ConnexionPage> {
       });
 
       var data = json.decode(response.body);
-      if (data == "success") {
+      if (data != "error") {
+        // Utilisation du token reçu pour l'authentification
+        var token = data;
+        // Effectuer des actions supplémentaires si nécessaire
         Navigator.push(
             cont, MaterialPageRoute(builder: (context) => AccueilPage()));
       } else {
@@ -65,7 +67,6 @@ class _ConnexionPageState extends State<ConnexionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
       body: SafeArea(
         child: Center(
