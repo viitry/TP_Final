@@ -49,7 +49,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
               context, MaterialPageRoute(builder: (context) => AccueilPage()));
         } else {
           Fluttertoast.showToast(
-              msg: "La combinaison n'existe pas",
+              msg: "Une erreur s'est produite lors de la création du compte",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               fontSize: 16.0);

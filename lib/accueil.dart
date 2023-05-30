@@ -320,7 +320,7 @@ class RepasCard extends StatelessWidget {
                       color: Color.fromRGBO(46, 88, 123, 1),
                       onPressed: _commander,
                       child: Text(
-                        'Commander',
+                        'En savoir plus',
                         style: GoogleFonts.imprima(color: Colors.white),
                       ),
                     ),

@@ -35,7 +35,12 @@ class _ConnexionPageState extends State<ConnexionPage> {
       });
 
       var data = json.decode(response.body);
-      if (data != "error") {
+      if (data == "success") {
+        Fluttertoast.showToast(
+            msg: "Bienvenue",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0);
         Navigator.push(
             cont, MaterialPageRoute(builder: (context) => AccueilPage()));
       } else {
@@ -47,19 +52,6 @@ class _ConnexionPageState extends State<ConnexionPage> {
       }
     }
   }
-
-  //final _emailController = TextEditingController();
-  //final _passwordController = TextEditingController();
-
-  /*void _connecter() {
-    // String email = _emailController.text;
-    //String password = _passwordController.text;
-
-    // Vérifier les données dans une base de données ou un autre système de stockage
-
-    // Naviguer vers la page d'accueil
-    Navigator.pop(context);
-  }*/
 
   @override
   Widget build(BuildContext context) {

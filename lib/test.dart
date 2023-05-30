@@ -201,6 +201,7 @@ class TestPage extends StatefulWidget {
   _TestPageState createState() => _TestPageState();
 }
 
+/*
 class _TestPageState extends State<TestPage> {
   Future<Map<String, dynamic>> getLastUser() async {
     var response = await http.get(Uri.parse(
@@ -230,6 +231,40 @@ class _TestPageState extends State<TestPage> {
     setState(() {
       _username = user['username'];
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Bienvenue, $_username!',
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+    );
+  }
+}*/
+class _TestPageState extends State<TestPage> {
+  String _username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getUsername();
+  }
+
+  Future<void> _getUsername() async {
+    var response = await http.get(Uri.parse(
+        'http://192.168.1.94/flutter_application_1/php/get_user.php'));
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      if (responseBody is Map<String, dynamic>) {
+        setState(() {
+          _username = responseBody['username'];
+        });
+      }
+    }
   }
 
   @override

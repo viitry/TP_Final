@@ -1,9 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'RepasInformation.dart';
+import 'package:http/http.dart' as http;
 
 class RepasDetailsPage extends StatelessWidget {
   final Map repasData;
+  List<Map<String, dynamic>> repasList = [];
+
+  Future<void> fetchRepasData() async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.1.94/flutter_application_1/php/loadproducts.php'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+    } else {
+      print('Failed to fetch repas data');
+    }
+  }
 
   RepasDetailsPage({required this.repasData});
 
@@ -25,7 +40,7 @@ class RepasDetailsPage extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: AssetImage(
-                        repasData['picture'],
+                        repasData[''],
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -38,7 +53,7 @@ class RepasDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      repasData['title'],
+                      repasData['titre'],
                       style: GoogleFonts.imprima(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
