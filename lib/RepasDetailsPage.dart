@@ -5,22 +5,51 @@ import 'package:google_fonts/google_fonts.dart';
 import 'RepasInformation.dart';
 import 'package:http/http.dart' as http;
 
-class RepasDetailsPage extends StatelessWidget {
+class RepasDetailsPage extends StatefulWidget {
   final Map repasData;
-  List<Map<String, dynamic>> repasList = [];
 
-  Future<void> fetchRepasData() async {
-    final response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/loadproducts.php'));
+  RepasDetailsPage({required this.repasData});
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-    } else {
-      print('Failed to fetch repas data');
+  @override
+  _RepasDetailsPageState createState() => _RepasDetailsPageState();
+}
+
+class _RepasDetailsPageState extends State<RepasDetailsPage> {
+  Map<String, dynamic> productDetails = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProduct();
+  }
+
+  Future<void> fetchProduct() async {
+    try {
+      final int productId = widget.repasData['product_id'];
+      final details = await fetchProductDetails(productId);
+      setState(() {
+        productDetails = details;
+      });
+    } catch (error) {
+      // Gérer les erreurs lors de la récupération des détails du produit
+      print('Erreur lors de la récupération des détails du produit: $error');
     }
   }
 
-  RepasDetailsPage({required this.repasData});
+  Future<Map<String, dynamic>> fetchProductDetails(int id) async {
+    final url =
+        'http:192.168.1.94/flutter_application_1/php/get_products_details.php?id=$id';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      // Conversion de la réponse JSON en Map
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      return responseData;
+    } else {
+      throw Exception('Failed to fetch product details');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +69,7 @@ class RepasDetailsPage extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: AssetImage(
-                        repasData[''],
+                        widget.repasData[''],
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -53,14 +82,14 @@ class RepasDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      repasData['titre'],
+                      widget.repasData['product_titre'],
                       style: GoogleFonts.imprima(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
-                      '\€' + repasData['price'],
+                      '\€' + widget.repasData['product_prix'],
                       style: GoogleFonts.imprima(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
@@ -76,7 +105,7 @@ class RepasDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      repasData['place'],
+                      widget.repasData['product_lieu'],
                       style: GoogleFonts.nunito(
                         fontSize: 14,
                         color: Colors.grey[500],
@@ -109,7 +138,7 @@ class RepasDetailsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          repasData['description'],
+                          widget.repasData['product_desc'],
                           style: GoogleFonts.imprima(
                             fontSize: 14,
                             color: Color.fromRGBO(46, 88, 123, 1),
@@ -148,7 +177,7 @@ class RepasDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
-                                'Oeuf Noix',
+                                widget.repasData['product_allergie'],
                                 style: GoogleFonts.imprima(
                                   fontSize: 14,
                                   color: Color.fromRGBO(46, 88, 123, 1),
@@ -184,7 +213,7 @@ class RepasDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
-                                '300 grammes',
+                                widget.repasData['product_info'],
                                 style: GoogleFonts.imprima(
                                   fontSize: 14,
                                   color: Color.fromRGBO(46, 88, 123, 1),
@@ -225,8 +254,8 @@ class RepasDetailsPage extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'L',
+                              child: Text(
+                                widget.repasData['product_jour'],
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
                               ),

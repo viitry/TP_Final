@@ -303,7 +303,7 @@ class RepasCard extends StatelessWidget {
                 ),
                 image: DecorationImage(
                   image: AssetImage(
-                    repasData['picture'] ?? '',
+                    repasData['pictureUrl'] ?? '',
                   ),
                   fit: BoxFit.cover,
                 ),
