@@ -10,11 +10,13 @@ class PublierPage extends StatelessWidget {
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_cropper/image_cropper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'accueil.dart';
 
 class PublierPage extends StatefulWidget {
   const PublierPage({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _PublierPageState extends State<PublierPage> {
   final _formKey = GlobalKey<FormState>();
   String dropdownvalue = 'Beverage';
   var types = [
-    'Baby',
+    'Pizza',
     'Beverage',
     'Bread',
     'Breakfast',
@@ -92,9 +94,6 @@ class _PublierPageState extends State<PublierPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Product'),
-      ),
       body: SingleChildScrollView(
           child: Center(
               child: SizedBox(
@@ -301,15 +300,14 @@ class _PublierPageState extends State<PublierPage> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: screenWidth,
-              height: 50,
-              child: ElevatedButton(
-                child: const Text("Insert"),
-                onPressed: () {
-                  _insertDialog();
-                },
-              ),
-            ),
+                width: screenWidth,
+                height: 50,
+                child: ElevatedButton(
+                  child: const Text("Insert"),
+                  onPressed: () {
+                    _insertDialog();
+                  },
+                )),
             const SizedBox(height: 10),
           ]),
         ),
@@ -373,26 +371,15 @@ class _PublierPageState extends State<PublierPage> {
     }
   }
 
-  /*Future<void> _cropImage() async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-        sourcePath: _image!.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-        ],
-        androidUiSettings: const AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: const IOSUiSettings(
-          minimumAspectRatio: 1.0,
-        ));
-    if (croppedFile != null) {
-      _image = croppedFile;
-      setState(() {});
-    }
-  }*/
+  // Future<void> _cropImage() async {
+  //   CroppedFile? croppedFile = await ImageCropper().cropImage(
+  //     sourcePath: _image!.path,
+  //   );
+  //   if (croppedFile != null) {
+  //     _image = croppedFile;
+  //     setState(() {});
+  //   }
+  // }
 
   void _insertDialog() {
     if (_formKey.currentState!.validate() && _image != null) {
@@ -409,15 +396,17 @@ class _PublierPageState extends State<PublierPage> {
             ),
             content: const Text("Are you sure?", style: TextStyle()),
             actions: <Widget>[
-              TextButton(
-                child: const Text(
-                  "Yes",
-                  style: TextStyle(),
+              GestureDetector(
+                child: TextButton(
+                  child: const Text(
+                    "Yes",
+                    style: TextStyle(),
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    _insertProduct();
+                  },
                 ),
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  _insertProduct();
-                },
               ),
               TextButton(
                 child: const Text(

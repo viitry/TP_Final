@@ -44,6 +44,8 @@ dependencies:
   sqflite: ^2.2.8+2
   image_picker: ^0.8.7+5
   image_cropper: ^4.0.1
+  cached_network_image: ^3.1.0
+
 
 dev_dependencies:
   flutter_test:

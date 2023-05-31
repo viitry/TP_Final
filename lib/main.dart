@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'inscription.dart';
-import 'connexion.dart';
-import 'accueil.dart';
+import 'views/inscription.dart';
+import 'views/connexion.dart';
+import 'views/accueil.dart';
 import 'profil.dart';
 import 'RepasInformation.dart';
 import 'test.dart';

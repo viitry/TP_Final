@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/database_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'RepasDetailsPage.dart';
-import 'profil.dart';
+import '../profil.dart';
 import 'publier.dart';
 
 class AccueilPage extends StatelessWidget {
@@ -77,7 +78,7 @@ class SearchSection extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => ProfilPage()),
                         );
                       },
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Color.fromARGB(176, 92, 134, 153),
                       mini: true,
                       child: Icon(Icons.person),
                     ),
@@ -104,7 +105,7 @@ class SearchSection extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Rechercher un plat, une ville ...',
-                        hintStyle: GoogleFonts.imprima(fontSize: 12),
+                        hintStyle: GoogleFonts.imprima(fontSize: 13),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -139,7 +140,7 @@ class CategorySection extends StatelessWidget {
               SizedBox(width: 10),
               Text(
                 'Catégorie',
-                style: GoogleFonts.imprima(
+                style: GoogleFonts.lato(
                     color: Color.fromRGBO(0, 0, 0, 0.612),
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
@@ -159,7 +160,7 @@ class CategorySection extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 0.5),
+                    border: Border.all(color: Colors.black, width: 1),
                     color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Pizza",
@@ -171,7 +172,7 @@ class CategorySection extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 0.5),
+                    border: Border.all(color: Colors.black, width: 1),
                     color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Burger",
@@ -183,7 +184,7 @@ class CategorySection extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 0.5),
+                    border: Border.all(color: Colors.black, width: 1),
                     color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Dessert",
@@ -195,7 +196,7 @@ class CategorySection extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 0.5),
+                    border: Border.all(color: Colors.black, width: 1),
                     color: Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Text("Végétarien",
@@ -301,15 +302,25 @@ class RepasCard extends StatelessWidget {
                   topLeft: Radius.circular(18),
                   topRight: Radius.circular(18),
                 ),
-                image: DecorationImage(
-                  image: AssetImage(
-                    repasData['pictureUrl'] ?? '',
-                  ),
-                  fit: BoxFit.cover,
-                ),
               ),
               child: Stack(
                 children: [
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(18),
+                        topRight: Radius.circular(18),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: repasData['image_url'] ?? '',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
+                  ),
                   Positioned(
                     bottom: 5,
                     right: 9,
@@ -395,7 +406,6 @@ class RepasCard extends StatelessWidget {
     );
   }
 }
-
 /*class YourScreenName extends StatefulWidget {
   @override
   _YourScreenNameState createState() => _YourScreenNameState();

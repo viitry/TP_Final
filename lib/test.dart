@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/database_helper.dart';
 
-import 'RepasDetailsPage.dart';
+import 'views/RepasDetailsPage.dart';
 import 'profil.dart';
 
 /*class FoodApp extends StatefulWidget {

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'RepasInformation.dart';
+import '../RepasInformation.dart';
 import 'package:http/http.dart' as http;
 
 class RepasDetailsPage extends StatefulWidget {
@@ -67,12 +68,12 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                     borderRadius: BorderRadius.all(
                       Radius.circular(18),
                     ),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        widget.repasData[''],
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.repasData['image_url'],
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),
@@ -260,54 +261,54 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                                     fontSize: 16, color: Colors.black),
                               ),
                             ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'M',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'Me',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'J',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'V',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'S',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: const Text(
-                                'D',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
-                            ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'M',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'Me',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'J',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'V',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'S',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
+                            // CircleAvatar(
+                            //   backgroundColor: Colors.grey[300],
+                            //   child: const Text(
+                            //     'D',
+                            //     style: TextStyle(
+                            //         fontSize: 16, color: Colors.black),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

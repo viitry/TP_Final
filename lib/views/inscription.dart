@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'connexion.dart';
-import 'main.dart';
+import '../main.dart';
 import 'accueil.dart';
 
 class InscriptionPage extends StatefulWidget {
