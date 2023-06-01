@@ -28,12 +28,15 @@ class _ConnexionPageState extends State<ConnexionPage> {
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
     } else {
-      var url = "http://192.168.1.94/flutter_application_1/php/login.php";
-      var response = await http.post(Uri.parse(url), body: {
-        "username": username.text,
-        "password": password.text,
-      });
-
+      print('Username: ${username.text}');
+      print('Password: ${password.text}');
+      var response = await http.post(
+          Uri.parse("http://192.168.1.94/flutter_application_1/php/login.php"),
+          body: {
+            "username": username.text,
+            "password": password.text,
+          });
+      print('Response: ${response.body}');
       var data = json.decode(response.body);
       if (data == "success") {
         Fluttertoast.showToast(
@@ -43,7 +46,8 @@ class _ConnexionPageState extends State<ConnexionPage> {
             fontSize: 16.0);
         Navigator.push(
             cont, MaterialPageRoute(builder: (context) => AccueilPage()));
-      } else {
+      }
+      if (data == "error") {
         Fluttertoast.showToast(
             msg: "Nom d'utilisateur ou/et mot de passe incorrect",
             toastLength: Toast.LENGTH_SHORT,

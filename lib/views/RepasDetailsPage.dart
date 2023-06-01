@@ -26,7 +26,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
 
   Future<void> fetchProduct() async {
     try {
-      final int productId = widget.repasData['product_id'];
+      final int productId = widget.repasData['user_id'];
       final details = await fetchProductDetails(productId);
       setState(() {
         productDetails = details;

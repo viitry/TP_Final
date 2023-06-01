@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'views./connexion.dart';
 
 class ProfilPage extends StatefulWidget {
   @override
@@ -19,7 +20,8 @@ class _ProfilPageState extends State<ProfilPage> {
   TextEditingController _addressController = TextEditingController();
 
   Future getUserInfo(String token) async {
-    var url = 'http://192.168.1.94/flutter_application_1/php/getUserInfo.php';
+    var url =
+        'http://192.168.1.94/flutter_application_1/php/get_current_user.php';
     var response = await http.post(Uri.parse(url), body: {
       "token": token,
     });
@@ -47,6 +49,17 @@ class _ProfilPageState extends State<ProfilPage> {
     return token;
   }
 
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs
+        .clear(); // Effacer toutes les informations stockées en utilisant SharedPreferences
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => ConnexionPage()),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -68,14 +81,6 @@ class _ProfilPageState extends State<ProfilPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextFormField(
-              enabled: false,
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: 'Nom d\'utilisateur',
-              ),
-            ),
-            SizedBox(height: 16.0),
             Text(
               _usernameController.text,
               style: TextStyle(
@@ -116,6 +121,11 @@ class _ProfilPageState extends State<ProfilPage> {
               decoration: InputDecoration(
                 labelText: 'Adresse',
               ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _logout,
+              child: Text('Déconnexion'),
             ),
           ],
         ),

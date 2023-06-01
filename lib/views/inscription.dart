@@ -33,12 +33,13 @@ class _InscriptionPageState extends State<InscriptionPage> {
       if (password.text == repeatpassword.text) {
         var url = "http://192.168.1.94/flutter_application_1/php/register.php";
         var response = await http.post(Uri.parse(url), body: {
+          // Utilisez les mêmes clés que celles attendues par le script PHP
           "username": username.text,
           "password": password.text,
         });
 
         var data = json.decode(response.body);
-        if (data == "success") {
+        if (data['status'] == "success") {
           Fluttertoast.showToast(
               msg: "Vous avez créé votre compte !",
               toastLength: Toast.LENGTH_SHORT,
@@ -200,8 +201,8 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                ConnexionPage()),
+                                            builder: (context) => ConnexionPage(
+                                                key: UniqueKey())),
                                       );
                                     },
                                     child: Text(

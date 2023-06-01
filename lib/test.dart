@@ -245,6 +245,7 @@ class _TestPageState extends State<TestPage> {
     );
   }
 }*/
+
 class _TestPageState extends State<TestPage> {
   String _username = '';
 
@@ -256,14 +257,12 @@ class _TestPageState extends State<TestPage> {
 
   Future<void> _getUsername() async {
     var response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/get_user.php'));
+        'http://192.168.1.94/flutter_application_1/php/get_current_user.php'));
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
-      if (responseBody is Map<String, dynamic>) {
-        setState(() {
-          _username = responseBody['username'];
-        });
-      }
+      setState(() {
+        _username = responseBody;
+      });
     }
   }
 
