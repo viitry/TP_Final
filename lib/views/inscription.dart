@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'connexion.dart';
 import '../main.dart';
 import 'accueil.dart';
@@ -39,7 +40,8 @@ class _InscriptionPageState extends State<InscriptionPage> {
         });
 
         var data = json.decode(response.body);
-        if (data['status'] == "success") {
+
+        if (data['status'] == 'success') {
           Fluttertoast.showToast(
               msg: "Vous avez créé votre compte !",
               toastLength: Toast.LENGTH_SHORT,
@@ -164,8 +166,8 @@ class _InscriptionPageState extends State<InscriptionPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
                                 child: TextButton(
-                                  onPressed: () {
-                                    register(context);
+                                  onPressed: () async {
+                                    await register(context);
                                   },
                                   style: TextButton.styleFrom(
                                     backgroundColor:

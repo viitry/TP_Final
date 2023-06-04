@@ -16,6 +16,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'accueil.dart';
 
 class PublierPage extends StatefulWidget {
@@ -26,6 +28,24 @@ class PublierPage extends StatefulWidget {
 }
 
 class _PublierPageState extends State<PublierPage> {
+  late String username;
+
+  Future<void> _getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUsername = prefs.getString('username');
+    if (storedUsername != null) {
+      setState(() {
+        username = storedUsername;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUsername();
+  }
+
   late double screenHeight, screenWidth, ctrwidth;
   String pathAsset = 'assets/images/repas.jpeg';
   var _image;
@@ -322,7 +342,7 @@ class _PublierPageState extends State<PublierPage> {
         // return object of type Dialog
         return AlertDialog(
             title: const Text(
-              "Select from",
+              "Veuillez choisir",
             ),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -333,7 +353,7 @@ class _PublierPageState extends State<PublierPage> {
                           _galleryPicker(),
                         },
                     icon: const Icon(Icons.browse_gallery),
-                    label: const Text("Gallery")),
+                    label: const Text("Galerie")),
                 TextButton.icon(
                     onPressed: () =>
                         {Navigator.of(context).pop(), _cameraPicker()},
@@ -354,7 +374,6 @@ class _PublierPageState extends State<PublierPage> {
     );
     if (pickedFile != null) {
       _image = File(pickedFile.path);
-      //_cropImage();
     }
   }
 
@@ -367,19 +386,8 @@ class _PublierPageState extends State<PublierPage> {
     );
     if (pickedFile != null) {
       _image = File(pickedFile.path);
-      //_cropImage();
     }
   }
-
-  // Future<void> _cropImage() async {
-  //   CroppedFile? croppedFile = await ImageCropper().cropImage(
-  //     sourcePath: _image!.path,
-  //   );
-  //   if (croppedFile != null) {
-  //     _image = croppedFile;
-  //     setState(() {});
-  //   }
-  // }
 
   void _insertDialog() {
     if (_formKey.currentState!.validate() && _image != null) {
@@ -391,15 +399,15 @@ class _PublierPageState extends State<PublierPage> {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
             title: const Text(
-              "Add this product",
+              "Ajouter ce produit",
               style: TextStyle(),
             ),
-            content: const Text("Are you sure?", style: TextStyle()),
+            content: const Text("Etes vous sur ?", style: TextStyle()),
             actions: <Widget>[
               GestureDetector(
                 child: TextButton(
                   child: const Text(
-                    "Yes",
+                    "Oui",
                     style: TextStyle(),
                   ),
                   onPressed: () async {
@@ -410,7 +418,7 @@ class _PublierPageState extends State<PublierPage> {
               ),
               TextButton(
                 child: const Text(
-                  "No",
+                  "Non",
                   style: TextStyle(),
                 ),
                 onPressed: () {
@@ -444,8 +452,9 @@ class _PublierPageState extends State<PublierPage> {
           "jour": _prjour,
           "lieu": _prlieu,
           "info": _prinfo,
-          "type": dropdownvalue,
+          "categorie": dropdownvalue,
           "image": base64Image,
+          "username": username,
         }).then((response) {
       print(response.body);
       var data = jsonDecode(response.body);

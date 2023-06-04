@@ -7,6 +7,7 @@ import 'package:flutter_application_1/views/inscription.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'accueil.dart';
 
 class ConnexionPage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  Future login(BuildContext cont) async {
+  Future login(BuildContext context) async {
     if (username.text == "" || password.text == "") {
       Fluttertoast.showToast(
           msg: "Veuillez remplir tous les champs",
@@ -28,26 +29,29 @@ class _ConnexionPageState extends State<ConnexionPage> {
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
     } else {
-      print('Username: ${username.text}');
-      print('Password: ${password.text}');
-      var response = await http.post(
-          Uri.parse("http://192.168.1.94/flutter_application_1/php/login.php"),
-          body: {
-            "username": username.text,
-            "password": password.text,
-          });
-      print('Response: ${response.body}');
+      var url = "http://192.168.1.94/flutter_application_1/php/login.php";
+      var response = await http.post(Uri.parse(url), body: {
+        // Utilisez les mêmes clés que celles attendues par le script PHP
+        "username": username.text,
+        "password": password.text,
+      });
       var data = json.decode(response.body);
-      if (data == "success") {
+
+      if (data['status'] == 'success') {
         Fluttertoast.showToast(
             msg: "Bienvenue",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             fontSize: 16.0);
+
+        // Stocker le token d'authentification dans SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data['token']);
+        await prefs.setString('username', username.text);
+
         Navigator.push(
-            cont, MaterialPageRoute(builder: (context) => AccueilPage()));
-      }
-      if (data == "error") {
+            context, MaterialPageRoute(builder: (context) => AccueilPage()));
+      } else {
         Fluttertoast.showToast(
             msg: "Nom d'utilisateur ou/et mot de passe incorrect",
             toastLength: Toast.LENGTH_SHORT,

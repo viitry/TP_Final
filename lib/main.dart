@@ -72,18 +72,18 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('Accueil'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profil');
-              },
-              child: Text('Profil'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/test');
-              },
-              child: Text('test'),
-            )
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/profil');
+            //   },
+            //   child: Text('Profil'),
+            //),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/test');
+            //   },
+            //   child: Text('test'),
+            // )
           ],
         ),
       ),

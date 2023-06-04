@@ -7,6 +7,7 @@ import 'package:flutter_application_1/database_helper.dart';
 
 import 'views/RepasDetailsPage.dart';
 import 'profil.dart';
+import 'AuthService.dart';
 
 /*class FoodApp extends StatefulWidget {
   @override
@@ -201,7 +202,6 @@ class TestPage extends StatefulWidget {
   _TestPageState createState() => _TestPageState();
 }
 
-/*
 class _TestPageState extends State<TestPage> {
   Future<Map<String, dynamic>> getLastUser() async {
     var response = await http.get(Uri.parse(
@@ -244,37 +244,32 @@ class _TestPageState extends State<TestPage> {
       ),
     );
   }
-}*/
-
-class _TestPageState extends State<TestPage> {
-  String _username = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _getUsername();
-  }
-
-  Future<void> _getUsername() async {
-    var response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/get_current_user.php'));
-    if (response.statusCode == 200) {
-      final responseBody = json.decode(response.body);
-      setState(() {
-        _username = responseBody;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Bienvenue, $_username!',
-          style: TextStyle(fontSize: 20.0),
-        ),
-      ),
-    );
-  }
 }
+
+// class _TestPageState extends State<TestPage> {
+//   AuthService authService = AuthService();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Accueil'),
+//       ),
+//       body: Center(
+//         child: FutureBuilder<String>(
+//           future: authService.getCurrentUser(),
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return CircularProgressIndicator();
+//             } else if (snapshot.hasData) {
+//               String username = snapshot.data ?? 'Unknown User';
+//               return Text('Bienvenue, $username');
+//             } else {
+//               return Text('Utilisateur non connecté');
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'views./connexion.dart';
+import 'views/connexion.dart';
 
 class ProfilPage extends StatefulWidget {
   @override
@@ -15,44 +13,38 @@ class _ProfilPageState extends State<ProfilPage> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
 
-  Future getUserInfo(String token) async {
-    var url =
-        'http://192.168.1.94/flutter_application_1/php/get_current_user.php';
-    var response = await http.post(Uri.parse(url), body: {
-      "token": token,
-    });
+  // Future getUserInfo(String token) async {
+  //   var url =
+  //       'http://192.168.1.94/flutter_application_1/php/get_current_user.php';
+  //   var response = await http.post(Uri.parse(url), body: {"token": token});
 
-    if (response.statusCode == 200) {
-      // Si la requête est réussie, récupérer les informations de l'utilisateur
-      final user = jsonDecode(response.body) as Map<String, dynamic>;
+  //   if (response.statusCode == 200) {
+  //     final user = jsonDecode(response.body) as Map<String, dynamic>;
 
-      setState(() {
-        _usernameController.text = user['username'];
-        _nameController.text = user['name'];
-        _emailController.text = user['email'];
-        _phoneController.text = user['phone'];
-        _addressController.text = user['address'];
-      });
-    } else {
-      // Si la requête échoue, afficher un message d'erreur
-      throw Exception('Failed to load user info');
-    }
-  }
+  //     setState(() {
+  //       _usernameController.text = user['username'];
+  //       _nameController.text = user['name'];
+  //       _emailController.text = user['email'];
+  //       _phoneController.text = user['phone'];
+  //       _addressController.text = user['address'];
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load user info');
+  //   }
+  // }
 
-  Future<String> _getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token') ?? '';
-    return token;
-  }
+  // Future<String> _getToken() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString('token') ?? '';
+  //   return token;
+  // }
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs
-        .clear(); // Effacer toutes les informations stockées en utilisant SharedPreferences
+    await prefs.clear();
 
     Navigator.pushReplacement(
       context,
@@ -60,15 +52,15 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _getToken().then((value) {
-      if (value.isNotEmpty) {
-        getUserInfo(value);
-      }
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getToken().then((value) {
+  //     if (value.isNotEmpty) {
+  //       getUserInfo(value);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

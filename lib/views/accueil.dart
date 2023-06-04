@@ -7,16 +7,55 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/database_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RepasDetailsPage.dart';
 import '../profil.dart';
 import 'publier.dart';
+import '../AuthService.dart';
 
-class AccueilPage extends StatelessWidget {
+class AccueilPage extends StatefulWidget {
+  @override
+  _AccueilPageState createState() => _AccueilPageState();
+}
+
+class _AccueilPageState extends State<AccueilPage> {
+  String username = '';
+
+  // Future<void> _checkSession() async {
+  //   final response = await http.get(Uri.parse(
+  //       'http://192.168.1.94/flutter_application_1/php/check_session.php'));
+
+  //   if (response.statusCode == 200) {
+  //     final jsonData = jsonDecode(response.body);
+  //     if (jsonData['status'] == 'success') {
+  //       setState(() {
+  //         _username = jsonData['username'];
+  //       });
+  //     }
+  //   }
+  // }
+
+  Future<void> _getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUsername = prefs.getString('username');
+    setState(() {
+      username = storedUsername ?? '';
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _getUsername();
+    //fetchRepasData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
+      appBar: AppBar(title: Text('$username est connecté')),
       body: ListView(
         children: [
           SearchSection(),
@@ -57,6 +96,7 @@ class AccueilPage extends StatelessWidget {
 }
 
 class SearchSection extends StatelessWidget {
+  final AuthService authService = AuthService.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,6 +125,21 @@ class SearchSection extends StatelessWidget {
                   ),
                 ],
               ),
+              // FutureBuilder<String>(
+              //   future: authService.getCurrentUser(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       return Text(
+              //         'Bienvenue, ${snapshot.data}',
+              //         style: TextStyle(fontSize: 12),
+              //       );
+              //     } else if (snapshot.hasError) {
+              //       return Text('Erreur: ${snapshot.error}');
+              //     } else {
+              //       return SizedBox.shrink();
+              //     }
+              //   },
+              // ),
               Container(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
@@ -218,12 +273,7 @@ class RepasSection extends StatefulWidget {
 
 class _RepasSectionState extends State<RepasSection> {
   List<Map<String, dynamic>> repasList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchRepasData();
-  }
+  final _scrollController = ScrollController();
 
   Future<void> fetchRepasData() async {
     final response = await http.get(Uri.parse(
@@ -239,6 +289,12 @@ class _RepasSectionState extends State<RepasSection> {
     } else {
       print('Failed to fetch repas data');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRepasData();
   }
 
   @override
@@ -351,6 +407,15 @@ class RepasCard extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Publie par: ${repasData['username']}',
+                    style: GoogleFonts.nunito(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                   Text(
                     '\€${repasData['product_prix'] ?? ''}',
                     style: GoogleFonts.imprima(
@@ -406,38 +471,5 @@ class RepasCard extends StatelessWidget {
     );
   }
 }
-/*class YourScreenName extends StatefulWidget {
-  @override
-  _YourScreenNameState createState() => _YourScreenNameState();
-}
-
-class _YourScreenNameState extends State<YourScreenName> {
-  String _username = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _getLastUser();
-  }
-
-  Future<void> _getLastUser() async {
-    final user = await DatabaseHelper.instance.getLastUser();
-    setState(() {
-      _username = user['username'];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Bienvenue, $_username!',
-          style: TextStyle(fontSize: 10.0),
-        ),
-      ),
-    );
-  }
-}*/
 
 void _commander() {}
