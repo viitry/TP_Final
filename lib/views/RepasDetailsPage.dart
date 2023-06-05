@@ -327,8 +327,8 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ChatPage(
-                                  receiverUsername:
-                                      'username', // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
+                                  receiverUsername: widget.repasData[
+                                      'username'], // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
                                 ),
                               ),
                             );
