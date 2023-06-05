@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'connexion.dart';
 import '../main.dart';
 import 'accueil.dart';
+import 'connexion.dart';
 
 class InscriptionPage extends StatefulWidget {
   @override
@@ -25,16 +26,36 @@ class _InscriptionPageState extends State<InscriptionPage> {
     if (username.text == "" ||
         password.text == "" ||
         repeatpassword.text == "") {
+      // Vérifier si les champs sont vides
       Fluttertoast.showToast(
-          msg: "Veuillez remplir tous les champs",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          fontSize: 16.0);
+        msg: "Veuillez remplir tous les champs",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        fontSize: 16.0,
+      );
+    } else if (password.text.length < 6 ||
+        !password.text.contains(RegExp(r'[A-Z]')) ||
+        !password.text.contains(RegExp(r'[0-9]'))) {
+      // Vérifier les critères du mot de passe
+      Fluttertoast.showToast(
+        msg:
+            "Le mot de passe doit contenir au moins 6 caractères, une majuscule et un chiffre",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        fontSize: 16.0,
+      );
+    } else if (!_isEmail(username.text)) {
+      // Vérifier si le username est une adresse email valide
+      Fluttertoast.showToast(
+        msg: "Le nom d'utilisateur doit être une adresse email valide",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        fontSize: 16.0,
+      );
     } else {
       if (password.text == repeatpassword.text) {
         var url = "http://192.168.1.94/flutter_application_1/php/register.php";
         var response = await http.post(Uri.parse(url), body: {
-          // Utilisez les mêmes clés que celles attendues par le script PHP
           "username": username.text,
           "password": password.text,
         });
@@ -43,28 +64,48 @@ class _InscriptionPageState extends State<InscriptionPage> {
 
         if (data['status'] == 'success') {
           Fluttertoast.showToast(
-              msg: "Vous avez créé votre compte !",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16.0);
+            msg: "Vous avez créé votre compte !",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0,
+          );
 
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AccueilPage()));
+            context,
+            MaterialPageRoute(builder: (context) => ConnexionPage()),
+          );
+        } else if (data['status'] == 'username_exists') {
+          // Vérifier si le nom d'utilisateur existe déjà
+          Fluttertoast.showToast(
+            msg: "Le nom d'utilisateur est déjà utilisé",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0,
+          );
         } else {
           Fluttertoast.showToast(
-              msg: "Une erreur s'est produite lors de la création du compte",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16.0);
+            msg: "Une erreur s'est produite lors de la création du compte",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16.0,
+          );
         }
       } else {
         Fluttertoast.showToast(
-            msg: "La combinaison n'existe pas",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            fontSize: 16.0);
+          msg: "La combinaison n'existe pas",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16.0,
+        );
       }
     }
+  }
+
+  bool _isEmail(String input) {
+    // Expression régulière pour vérifier si le texte correspond au format d'une adresse email
+    // Cette expression régulière n'est pas exhaustive mais couvre les cas courants
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+    return emailRegex.hasMatch(input);
   }
 
   @override

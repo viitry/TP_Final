@@ -2,12 +2,16 @@
 
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/inscription.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'accueil.dart';
 
 class ConnexionPage extends StatefulWidget {
@@ -218,25 +222,5 @@ class _ConnexionPageState extends State<ConnexionPage> {
         ),
       ),
     );
-  }
-}
-
-class MyClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height * 0.75);
-    path.quadraticBezierTo(
-        size.width / 4, size.height * 0.85, size.width / 2, size.height * 0.8);
-    path.quadraticBezierTo(
-        3 / 4 * size.width, size.height * 0.75, size.width, size.height * 0.9);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
   }
 }

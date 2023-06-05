@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../RepasInformation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
+import 'chatbox.dart';
 
 class RepasDetailsPage extends StatefulWidget {
   final Map repasData;
@@ -17,6 +22,60 @@ class RepasDetailsPage extends StatefulWidget {
 
 class _RepasDetailsPageState extends State<RepasDetailsPage> {
   Map<String, dynamic> productDetails = {};
+
+  Future<String> commanderPlat(int productID) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String username = prefs.getString('username') ?? '';
+    String token = prefs.getString('token') ?? '';
+
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.1.94/flutter_application_1/php/commanderPlat.php'),
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: {
+        "username": username,
+        "productID": productID.toString(),
+        "token": token,
+      },
+    );
+    if (response.statusCode == 200) {
+      sendEmailToSeller(widget.repasData['username'], "Nouvelle commande",
+          "L'utilisateur $username souhaite acheter un de vos repas '${widget.repasData['product_titre']}'");
+    }
+
+    return response.body;
+  }
+
+  Future<void> sendEmailToSeller(
+      String productUsername, String subject, String message) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token') ?? '';
+
+    final response = await http.post(
+      Uri.parse(
+          'http://192.168.1.94/flutter_application_1/php/getUserInfos.php'),
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body: {
+        "username": productUsername,
+        "token": token,
+      },
+    );
+
+    final result = jsonDecode(response.body);
+
+    if (result != null &&
+        result['success'] == true &&
+        result['user'] != null &&
+        result['user']['email'] != null) {
+      String sellerEmail = result['user']['email'];
+
+      // Envoyer l'e-mail au vendeur en utilisant l'adresse e-mail de l'utilisateur connecté comme expéditeur
+      // ...
+    } else {
+      // Afficher un message d'erreur
+      // ...
+    }
+  }
 
   @override
   void initState() {
@@ -57,7 +116,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          //color: Colors.green,
           margin: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,7 +158,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                 ),
               ),
               Container(
-                //color: Colors.blue,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +176,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
               SizedBox(height: 10),
               Expanded(
                 child: Container(
-                  //color: Colors.red,
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +213,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                     Expanded(
                       child: Container(
                         height: 100,
-                        //color: Color.fromARGB(255, 41, 43, 165),
                         margin: EdgeInsets.only(left: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +220,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                               child: Text(
-                                'Information allergie bla bla',
+                                'Information allergie',
                                 style: GoogleFonts.imprima(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -193,7 +248,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                     Expanded(
                       child: Container(
                         height: 100,
-                        //color: Color.fromARGB(255, 228, 227, 227),
                         margin: EdgeInsets.only(right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +285,6 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
               ),
               Expanded(
                 child: Container(
-                  //color: Color.fromARGB(255, 228, 227, 227),
                   margin: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,81 +311,62 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                               child: Text(
                                 widget.repasData['product_jour'],
                                 style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'M',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'Me',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'J',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'V',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'S',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
-                            // CircleAvatar(
-                            //   backgroundColor: Colors.grey[300],
-                            //   child: const Text(
-                            //     'D',
-                            //     style: TextStyle(
-                            //         fontSize: 16, color: Colors.black),
-                            //   ),
-                            // ),
                           ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 90.0),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                  receiverUsername:
+                                      'username', // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
+                                ),
+                              ),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(46, 88, 123, 100),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 30.0),
+                          ),
+                          child: Text(
+                            'Contacter',
+                            style: GoogleFonts.imprima(color: Colors.white),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Container(
-                color: Colors.white,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Center(
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    color: Color.fromRGBO(46, 88, 123, 1),
-                    onPressed: () {},
-                    child: Text(
-                      'Commander',
-                      style: GoogleFonts.imprima(color: Colors.white),
-                    ),
-                  ),
-                ),
-              )
+              // Container(
+              //   color: Colors.white,
+              //   margin: EdgeInsets.only(bottom: 20),
+              //   child: Center(
+              //     child: MaterialButton(
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(25),
+              //       ),
+              //       color: Color.fromRGBO(46, 88, 123, 1),
+              //       onPressed: () => commanderPlat(productID),
+              //       child: Text(
+              //         'Commander',
+              //         style: GoogleFonts.imprima(color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),
@@ -340,3 +374,5 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
     );
   }
 }
+
+void _commander() {}

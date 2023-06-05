@@ -22,20 +22,6 @@ class AccueilPage extends StatefulWidget {
 class _AccueilPageState extends State<AccueilPage> {
   String username = '';
 
-  // Future<void> _checkSession() async {
-  //   final response = await http.get(Uri.parse(
-  //       'http://192.168.1.94/flutter_application_1/php/check_session.php'));
-
-  //   if (response.statusCode == 200) {
-  //     final jsonData = jsonDecode(response.body);
-  //     if (jsonData['status'] == 'success') {
-  //       setState(() {
-  //         _username = jsonData['username'];
-  //       });
-  //     }
-  //   }
-  // }
-
   Future<void> _getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedUsername = prefs.getString('username');
@@ -125,21 +111,6 @@ class SearchSection extends StatelessWidget {
                   ),
                 ],
               ),
-              // FutureBuilder<String>(
-              //   future: authService.getCurrentUser(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return Text(
-              //         'Bienvenue, ${snapshot.data}',
-              //         style: TextStyle(fontSize: 12),
-              //       );
-              //     } else if (snapshot.hasError) {
-              //       return Text('Erreur: ${snapshot.error}');
-              //     } else {
-              //       return SizedBox.shrink();
-              //     }
-              //   },
-              // ),
               Container(
                 padding: EdgeInsets.all(8.0),
                 child: Row(
