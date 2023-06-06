@@ -174,37 +174,38 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                 ),
               ),
               SizedBox(height: 10),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
+              Container(
+                height: 95, // Définissez la hauteur souhaitée ici
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: Text(
+                        'Description',
+                        style: GoogleFonts.imprima(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: Text(
-                          'Description',
-                          style: GoogleFonts.imprima(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
                           widget.repasData['product_desc'],
-                          style: GoogleFonts.imprima(
+                          style: TextStyle(
+                            fontFamily: GoogleFonts.imprima().fontFamily,
                             fontSize: 14,
-                            color: Color.fromRGBO(46, 88, 123, 1),
+                            color: Color.fromRGBO(46, 88, 123, 50),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -212,7 +213,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 100,
+                        height: 90,
                         margin: EdgeInsets.only(left: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +221,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                               child: Text(
-                                'Information allergie',
+                                'Allergenes ',
                                 style: GoogleFonts.imprima(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -229,14 +230,19 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                               ),
                             ),
                             SizedBox(height: 5),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 5.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Color.fromRGBO(46, 88, 123, 100),
+                              ),
                               child: Text(
                                 widget.repasData['product_allergie'],
-                                style: GoogleFonts.imprima(
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.imprima().fontFamily,
                                   fontSize: 14,
-                                  color: Color.fromRGBO(46, 88, 123, 1),
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -247,7 +253,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                     ),
                     Expanded(
                       child: Container(
-                        height: 100,
+                        height: 90,
                         margin: EdgeInsets.only(right: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,7 +261,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                               child: Text(
-                                'Informations supplémentaires',
+                                'Quantites ',
                                 style: GoogleFonts.imprima(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -264,14 +270,19 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                               ),
                             ),
                             SizedBox(height: 5),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 5.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Color.fromRGBO(46, 88, 123, 100),
+                              ),
                               child: Text(
                                 widget.repasData['product_info'],
-                                style: GoogleFonts.imprima(
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.imprima().fontFamily,
                                   fontSize: 14,
-                                  color: Color.fromRGBO(46, 88, 123, 1),
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -283,66 +294,49 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                   ],
                 ),
               ),
-              Expanded(
+              Container(
                 child: Container(
                   margin: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Jour disponible',
+                              style: GoogleFonts.imprima(
+                                fontSize: 16,
+                                color: Color.fromRGBO(46, 88, 123, 100),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Color.fromRGBO(46, 88, 123, 100),
+                        ),
                         child: Text(
-                          'Jour disponible',
-                          style: GoogleFonts.imprima(
-                            fontSize: 16,
-                            color: Colors.black,
+                          widget.repasData['product_jour'],
+                          style: TextStyle(
+                            fontFamily: GoogleFonts.imprima().fontFamily,
+                            fontSize: 14,
+                            color: Colors.white,
                             fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              child: Text(
-                                widget.repasData['product_jour'],
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 90.0),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  receiverUsername: widget.repasData[
-                                      'username'], // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
-                                ),
-                              ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(46, 88, 123, 100),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 30.0),
-                          ),
-                          child: Text(
-                            'Contacter',
-                            style: GoogleFonts.imprima(color: Colors.white),
                           ),
                         ),
                       ),
@@ -350,23 +344,33 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                   ),
                 ),
               ),
-              // Container(
-              //   color: Colors.white,
-              //   margin: EdgeInsets.only(bottom: 20),
-              //   child: Center(
-              //     child: MaterialButton(
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(25),
-              //       ),
-              //       color: Color.fromRGBO(46, 88, 123, 1),
-              //       onPressed: () => commanderPlat(productID),
-              //       child: Text(
-              //         'Commander',
-              //         style: GoogleFonts.imprima(color: Colors.white),
-              //       ),
-              //     ),
-              //   ),
-              // )
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 90.0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                          receiverUsername: widget.repasData[
+                              'username'], // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
+                        ),
+                      ),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(46, 88, 123, 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                  ),
+                  child: Text(
+                    'Contacter',
+                    style: GoogleFonts.imprima(color: Colors.white),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -374,5 +378,3 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
     );
   }
 }
-
-void _commander() {}

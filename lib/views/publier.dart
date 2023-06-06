@@ -3,12 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'accueil.dart';
+import 'package:intl/intl.dart';
 
 class PublierPage extends StatefulWidget {
   const PublierPage({Key? key}) : super(key: key);
@@ -26,6 +24,29 @@ class _PublierPageState extends State<PublierPage> {
     if (storedUsername != null) {
       setState(() {
         username = storedUsername;
+      });
+    }
+  }
+
+  List<DateTime> _selectedDates = [];
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime initialDate = DateTime.now();
+    if (_selectedDates.isNotEmpty) {
+      initialDate = _selectedDates.last;
+    }
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && !_selectedDates.contains(picked)) {
+      setState(() {
+        _selectedDates.add(picked);
+        _prjourEditingController.text = _selectedDates
+            .map((date) => DateFormat('dd/MM/yyyy').format(date))
+            .join(', ');
       });
     }
   }
@@ -55,28 +76,15 @@ class _PublierPageState extends State<PublierPage> {
       TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  String dropdownvalue = 'Beverage';
+  String dropdownvalue = 'Burger';
   var types = [
     'Pizza',
-    'Beverage',
-    'Bread',
-    'Breakfast',
-    'Canned Food',
-    'Condiment',
-    'Care Product',
-    'Dairy',
-    'Dried Food',
-    'Grains',
-    'Frozen',
-    'Snack',
-    'Health',
-    'Meat',
-    'Miscellaneous',
-    'Seafood',
-    'Pet',
-    'Produce',
-    'Household',
-    'Vegetables',
+    'Burger',
+    'Dessert',
+    'Vegetarien',
+    'Entree',
+    'Petit-dejeuner',
+    'Boisson',
   ];
 
   @override
@@ -116,7 +124,7 @@ class _PublierPageState extends State<PublierPage> {
               child: GestureDetector(
                   onTap: () => {_takePictureDialog()},
                   child: SizedBox(
-                      height: screenHeight / 2.5,
+                      height: screenHeight / 3,
                       width: screenWidth,
                       child: _image == null
                           ? Image.asset(pathAsset)
@@ -126,19 +134,20 @@ class _PublierPageState extends State<PublierPage> {
                             ))),
             ),
             const SizedBox(height: 10),
-            TextFormField(
-              controller: _prtitreEditingController,
-              decoration: InputDecoration(
-                  labelText: 'Titre',
-                  prefixIcon: const Icon(Icons.title),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Entrez un titre valide';
-                }
-                return null;
-              },
+            Container(
+              child: TextFormField(
+                controller: _prtitreEditingController,
+                decoration: InputDecoration(
+                    labelText: 'Choisissez un titre',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0))),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez un titre valide';
+                  }
+                  return null;
+                },
+              ),
             ),
             const SizedBox(height: 5),
             TextFormField(
@@ -147,13 +156,10 @@ class _PublierPageState extends State<PublierPage> {
               keyboardType: TextInputType.multiline,
               maxLines: 6,
               decoration: InputDecoration(
-                  labelText: 'Description',
+                  labelText: 'Decrivez votre plat, les ingredients ...',
                   alignLabelWithHint: true,
-                  prefixIcon: const Padding(
-                      padding: EdgeInsets.only(bottom: 80),
-                      child: Icon(Icons.description)),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
+                      borderRadius: BorderRadius.circular(25.0))),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Veuillez entrer une description';
@@ -174,7 +180,7 @@ class _PublierPageState extends State<PublierPage> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0))),
+                              const BorderRadius.all(Radius.circular(25.0))),
                       child: DropdownButton(
                         value: dropdownvalue,
                         underline: const SizedBox(),
@@ -209,10 +215,9 @@ class _PublierPageState extends State<PublierPage> {
                           const TextInputType.numberWithOptions(decimal: true),
                       controller: _prprixEditingController,
                       decoration: InputDecoration(
-                          labelText: 'Prix',
-                          prefixIcon: const Icon(Icons.price_change),
+                          labelText: 'Choisissez un prix',
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0))),
+                              borderRadius: BorderRadius.circular(25.0))),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Entrez un prix ';
@@ -222,64 +227,56 @@ class _PublierPageState extends State<PublierPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 5),
               ],
             ),
+            const SizedBox(height: 5),
             TextFormField(
               controller: _prallergieEditingController,
               minLines: 3,
               keyboardType: TextInputType.multiline,
               maxLines: 3,
               decoration: InputDecoration(
-                  labelText: 'Aller',
+                  labelText: 'Oeuf, lait, arachide ...(optionnel) ',
                   alignLabelWithHint: true,
-                  prefixIcon: const Padding(
-                      padding: EdgeInsets.only(bottom: 80),
-                      child: Icon(Icons.description)),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer une allergie';
-                }
-                return null;
-              },
+                      borderRadius: BorderRadius.circular(25.0))),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             TextFormField(
               controller: _prjourEditingController,
+              onTap: () {
+                _selectDate(context);
+              },
+              readOnly: true,
               minLines: 1,
               keyboardType: TextInputType.multiline,
               maxLines: 2,
               decoration: InputDecoration(
-                  labelText: 'Jour',
-                  alignLabelWithHint: true,
-                  prefixIcon: const Padding(
-                      padding: EdgeInsets.only(bottom: 80),
-                      child: Icon(Icons.description)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
+                labelText: 'Choisissez une plusieurs dates',
+                alignLabelWithHint: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+              ),
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer un jour';
+                if (_selectedDates.isEmpty) {
+                  return 'Veuillez sélectionner au moins une date';
                 }
                 return null;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             TextFormField(
               controller: _prlieuEditingController,
               minLines: 1,
               keyboardType: TextInputType.multiline,
               maxLines: 2,
               decoration: InputDecoration(
-                  labelText: 'Lieu',
+                  labelText:
+                      'Entrez votre ville (arrondissemement ou quartier si possible)',
                   alignLabelWithHint: true,
-                  prefixIcon: const Padding(
-                      padding: EdgeInsets.only(bottom: 80),
-                      child: Icon(Icons.description)),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
+                      borderRadius: BorderRadius.circular(25.0))),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Veuillez entrer un lieu';
@@ -287,33 +284,30 @@ class _PublierPageState extends State<PublierPage> {
                 return null;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             TextFormField(
               controller: _prinfoEditingController,
               minLines: 2,
               keyboardType: TextInputType.multiline,
               maxLines: 2,
               decoration: InputDecoration(
-                  labelText: 'Info',
+                  labelText: 'Quantite / nombre de personnes ',
                   alignLabelWithHint: true,
-                  prefixIcon: const Padding(
-                      padding: EdgeInsets.only(bottom: 80),
-                      child: Icon(Icons.description)),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
+                      borderRadius: BorderRadius.circular(25.0))),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Veuillez entrer des infos';
+                  return 'Veuillez saisir les quantites et/ou le nombres de personnes';
                 }
                 return null;
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SizedBox(
                 width: screenWidth,
                 height: 50,
                 child: ElevatedButton(
-                  child: const Text("Insert"),
+                  child: const Text("Publier"),
                   onPressed: () {
                     _insertDialog();
                   },
@@ -329,7 +323,6 @@ class _PublierPageState extends State<PublierPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
             title: const Text(
               "Veuillez choisir",

@@ -5,8 +5,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/database_helper.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RepasDetailsPage.dart';
@@ -41,7 +42,6 @@ class _AccueilPageState extends State<AccueilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
-      appBar: AppBar(title: Text('$username est connecté')),
       body: ListView(
         children: [
           SearchSection(),
@@ -52,17 +52,6 @@ class _AccueilPageState extends State<AccueilPage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfilPage()),
-              );
-            },
-            backgroundColor: Colors.red,
-            mini: true,
-            child: Icon(Icons.favorite, color: Colors.white),
-          ),
           SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
@@ -153,7 +142,14 @@ class SearchSection extends StatelessWidget {
 }
 
 // ignore: use_key_in_widget_constructors
-class CategorySection extends StatelessWidget {
+class CategorySection extends StatefulWidget {
+  @override
+  _CategorySectionState createState() => _CategorySectionState();
+}
+
+class _CategorySectionState extends State<CategorySection> {
+  List<Map<String, dynamic>> repasList = [];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -167,73 +163,62 @@ class CategorySection extends StatelessWidget {
               Text(
                 'Catégorie',
                 style: GoogleFonts.lato(
-                    color: Color.fromRGBO(0, 0, 0, 0.612),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
+                  color: Color.fromRGBO(0, 0, 0, 0.612),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
               SizedBox(height: 5),
             ],
           ),
-          //SizedBox(height: 10),
+          SizedBox(height: 10),
           Container(
             height: 40,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width / 3,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 1),
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: Text("Pizza",
-                      style: GoogleFonts.imprima(color: Colors.black)),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width / 3,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 1),
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: Text("Burger",
-                      style: GoogleFonts.imprima(color: Colors.black)),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width / 3,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 1),
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: Text("Dessert",
-                      style: GoogleFonts.imprima(color: Colors.black)),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width / 3,
-                  margin: const EdgeInsets.only(right: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(color: Colors.black, width: 1),
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  child: Text("Végétarien",
-                      style: GoogleFonts.imprima(color: Colors.black)),
-                ),
+                buildCategoryButton("Pizza", context),
+                buildCategoryButton("Burger", context),
+                buildCategoryButton("Dessert", context),
+                buildCategoryButton("Végétarien", context),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget buildCategoryButton(String categoryName, BuildContext context) {
+    return Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width / 3,
+        margin: const EdgeInsets.only(right: 15),
+        child: GestureDetector(
+          onTap: () {
+            fetchRepasByCategory(
+                categoryName, context); // Pass the context here
+          },
+          child: Text(
+            categoryName,
+            style: GoogleFonts.imprima(color: Colors.black),
+          ),
+        ));
+  }
+
+  void fetchRepasByCategory(String category, BuildContext context) async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.1.94/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      final repasList =
+          data.map((repas) => Map<String, dynamic>.from(repas)).toList();
+      setState(() {
+        this.repasList = repasList; // Set the state of this widget
+      });
+    } else {
+      print('Failed to fetch repas data');
+    }
   }
 }
 
@@ -244,7 +229,7 @@ class RepasSection extends StatefulWidget {
 
 class _RepasSectionState extends State<RepasSection> {
   List<Map<String, dynamic>> repasList = [];
-  final _scrollController = ScrollController();
+  //final _scrollController = ScrollController();
 
   Future<void> fetchRepasData() async {
     final response = await http.get(Uri.parse(
@@ -260,6 +245,12 @@ class _RepasSectionState extends State<RepasSection> {
     } else {
       print('Failed to fetch repas data');
     }
+  }
+
+  void updateRepasList(List<Map<String, dynamic>> data) {
+    setState(() {
+      repasList = data;
+    });
   }
 
   @override

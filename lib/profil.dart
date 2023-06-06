@@ -10,37 +10,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-
-  // Future getUserInfo(String token) async {
-  //   var url =
-  //       'http://192.168.1.94/flutter_application_1/php/get_current_user.php';
-  //   var response = await http.post(Uri.parse(url), body: {"token": token});
-
-  //   if (response.statusCode == 200) {
-  //     final user = jsonDecode(response.body) as Map<String, dynamic>;
-
-  //     setState(() {
-  //       _usernameController.text = user['username'];
-  //       _nameController.text = user['name'];
-  //       _emailController.text = user['email'];
-  //       _phoneController.text = user['phone'];
-  //       _addressController.text = user['address'];
-  //     });
-  //   } else {
-  //     throw Exception('Failed to load user info');
-  //   }
-  // }
-
-  // Future<String> _getToken() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final token = prefs.getString('token') ?? '';
-  //   return token;
-  // }
+  String username = '';
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
@@ -52,75 +22,29 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getToken().then((value) {
-  //     if (value.isNotEmpty) {
-  //       getUserInfo(value);
-  //     }
-  //   });
-  // }
+  Future<void> _getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUsername = prefs.getString('username');
+    setState(() {
+      username = storedUsername ?? '';
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _getUsername();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
+        backgroundColor: Color.fromRGBO(46, 88, 123, 100),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              _usernameController.text,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              enabled: false,
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Nom',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              enabled: false,
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              enabled: false,
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                labelText: 'Téléphone',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              enabled: false,
-              controller: _addressController,
-              maxLines: 3,
-              decoration: InputDecoration(
-                labelText: 'Adresse',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _logout,
-              child: Text('Déconnexion'),
-            ),
-          ],
-        ),
+        child: Text('Bienvenue $username'),
       ),
     );
   }
