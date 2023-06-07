@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RepasDetailsPage.dart';
 import '../profil.dart';
+import 'chatbox.dart';
+import 'messages.dart';
 import 'publier.dart';
 import '../AuthService.dart';
 
@@ -90,7 +92,8 @@ class SearchSection extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ProfilPage()),
+                          MaterialPageRoute(
+                              builder: (context) => MessagePage()),
                         );
                       },
                       backgroundColor: Color.fromARGB(176, 92, 134, 153),

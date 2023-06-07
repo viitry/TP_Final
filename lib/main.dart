@@ -6,7 +6,7 @@ import 'views/inscription.dart';
 import 'views/connexion.dart';
 import 'views/accueil.dart';
 import 'profil.dart';
-import 'RepasInformation.dart';
+
 import 'test.dart';
 
 void main() {
@@ -29,13 +29,7 @@ class MyApp extends StatelessWidget {
         '/accueil': (context) => AccueilPage(),
         //'/accueil': (context) => SearchSection(),
         //'/accueil': (context) => RepasSection(),
-        '/RepasInformation': (context) => RepasInformation(
-              allergenes: '',
-              heure: '',
-              informations: '',
-              jour: '',
-              prix: 2,
-            ),
+
         '/profil': (context) => ProfilPage(),
         '/test': (context) => TestPage(),
       },
