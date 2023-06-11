@@ -1,7 +1,7 @@
 // ignore_for_file: equal_keys_in_map
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'views/inscription.dart';
 import 'views/connexion.dart';
 import 'views/accueil.dart';
@@ -25,11 +25,8 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       routes: {
         '/inscription': (context) => InscriptionPage(),
-        '/connexion': (context) => ConnexionPage(),
+        '/connexion': (context) => const ConnexionPage(),
         '/accueil': (context) => AccueilPage(),
-        //'/accueil': (context) => SearchSection(),
-        //'/accueil': (context) => RepasSection(),
-
         '/profil': (context) => ProfilPage(),
         '/test': (context) => TestPage(),
       },

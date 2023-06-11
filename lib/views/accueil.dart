@@ -7,12 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RepasDetailsPage.dart';
-import '../profil.dart';
-import 'chatbox.dart';
+//import '../profil.dart';
+//import 'chatbox.dart';
 import 'messages.dart';
 import 'publier.dart';
 import '../AuthService.dart';
@@ -211,7 +211,7 @@ class _CategorySectionState extends State<CategorySection> {
 
   void fetchRepasByCategory(String category, BuildContext context) async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
+        'http://192.168.1.93/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       final repasList =
@@ -236,7 +236,7 @@ class _RepasSectionState extends State<RepasSection> {
 
   Future<void> fetchRepasData() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/loadproducts.php'));
+        'http://192.168.1.93/flutter_application_1/php/loadproducts.php'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);

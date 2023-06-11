@@ -30,7 +30,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
           gravity: ToastGravity.CENTER,
           fontSize: 16.0);
     } else {
-      var url = "http://192.168.1.94/flutter_application_1/php/login.php";
+      var url = "http://192.168.1.93/flutter_application_1/php/login.php";
       var response = await http.post(Uri.parse(url), body: {
         // Utilisez les mêmes clés que celles attendues par le script PHP
         "username": username.text,

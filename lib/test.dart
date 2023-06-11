@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/database_helper.dart';
 
 import 'views/RepasDetailsPage.dart';
 import 'profil.dart';
@@ -25,7 +24,7 @@ class _FoodAppState extends State<FoodApp> {
 
   Future<void> fetchRepasData() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/loadproducts.php'));
+        'http://192.168.1.93/flutter_application_1/php/loadproducts.php'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -205,7 +204,7 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   Future<Map<String, dynamic>> getLastUser() async {
     var response = await http.get(Uri.parse(
-        'http://192.168.1.94/flutter_application_1/php/get_user.php'));
+        'http://192.168.1.93/flutter_application_1/php/get_user.php'));
 
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);

@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'connexion.dart';
 import '../main.dart';
 import 'accueil.dart';
-import 'connexion.dart';
 
 class InscriptionPage extends StatefulWidget {
   @override
@@ -54,7 +53,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
       );
     } else {
       if (password.text == repeatpassword.text) {
-        var url = "http://192.168.1.94/flutter_application_1/php/register.php";
+        var url = "http://localhost/flutter_application_1/php/register.php";
         var response = await http.post(Uri.parse(url), body: {
           "username": username.text,
           "password": password.text,

@@ -43,7 +43,7 @@ class _ChatPageState extends State<ChatPage> {
       // Envoyer le message au serveur en incluant le champ recipient
       await http.post(
           Uri.parse(
-              'http://192.168.1.94/flutter_application_1/php/send_messages.php'),
+              'http://192.168.1.93/flutter_application_1/php/send_messages.php'),
           body: {
             'sender': senderUsername!,
             'recipient': receiverUsername!,

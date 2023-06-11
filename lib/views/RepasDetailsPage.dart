@@ -30,7 +30,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
 
     final response = await http.post(
       Uri.parse(
-          'http://192.168.1.94/flutter_application_1/php/commanderPlat.php'),
+          'http://192.168.1.93/flutter_application_1/php/commanderPlat.php'),
       headers: {"Content-Type": "application/x-www-form-urlencoded"},
       body: {
         "username": username,
@@ -53,7 +53,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
 
     final response = await http.post(
       Uri.parse(
-          'http://192.168.1.94/flutter_application_1/php/getUserInfos.php'),
+          'http://192.168.1.93/flutter_application_1/php/getUserInfos.php'),
       headers: {"Content-Type": "application/x-www-form-urlencoded"},
       body: {
         "username": productUsername,
@@ -303,20 +303,13 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Jour disponible',
                               style: GoogleFonts.imprima(
                                 fontSize: 16,
-                                color: Color.fromRGBO(46, 88, 123, 100),
+                                color: Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
