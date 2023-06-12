@@ -440,5 +440,3 @@ class RepasCard extends StatelessWidget {
     );
   }
 }
-
-void _commander() {}
