@@ -37,10 +37,6 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> sendMessage() async {
     String message = messageController.text;
     if (message.isNotEmpty) {
-      // Envoyer le message (vous pouvez implémenter votre propre logique ici)
-      // Par exemple, vous pouvez envoyer le message à un serveur ou l'enregistrer localement
-      // pour le récupérer dans la liste des messages.
-      // Envoyer le message au serveur en incluant le champ recipient
       await http.post(
           Uri.parse(
               'http://192.168.1.93/flutter_application_1/php/send_messages.php'),

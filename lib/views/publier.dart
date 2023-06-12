@@ -102,6 +102,7 @@ class _PublierPageState extends State<PublierPage> {
 
   @override
   Widget build(BuildContext context) {
+    double maxPrice = 6.0;
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth >= 800) {
@@ -215,12 +216,18 @@ class _PublierPageState extends State<PublierPage> {
                           const TextInputType.numberWithOptions(decimal: true),
                       controller: _prprixEditingController,
                       decoration: InputDecoration(
-                          labelText: 'Choisissez un prix',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0))),
+                        labelText: 'Choisissez un prix',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Entrez un prix ';
+                          return 'Entrez un prix';
+                        }
+                        double? price = double.tryParse(value);
+                        if (price == null || price > maxPrice) {
+                          return 'Le prix doit être de ${maxPrice.toStringAsFixed(2)} euros ou moins';
                         }
                         return null;
                       },
@@ -443,7 +450,7 @@ class _PublierPageState extends State<PublierPage> {
       var data = jsonDecode(response.body);
       if (response.statusCode == 200 && data['status'] == 'success') {
         Fluttertoast.showToast(
-            msg: "Success",
+            msg: "Publie !",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,

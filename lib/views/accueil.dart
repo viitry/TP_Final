@@ -7,12 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RepasDetailsPage.dart';
-//import '../profil.dart';
-//import 'chatbox.dart';
 import 'messages.dart';
 import 'publier.dart';
 import '../AuthService.dart';
@@ -37,7 +35,6 @@ class _AccueilPageState extends State<AccueilPage> {
   initState() {
     super.initState();
     _getUsername();
-    //fetchRepasData();
   }
 
   @override
@@ -166,7 +163,7 @@ class _CategorySectionState extends State<CategorySection> {
               Text(
                 'Catégorie',
                 style: GoogleFonts.lato(
-                  color: Color.fromRGBO(0, 0, 0, 0.612),
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -350,7 +347,14 @@ class RepasCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       color: Color.fromRGBO(46, 88, 123, 1),
-                      onPressed: _commander,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  RepasDetailsPage(repasData: repasData)),
+                        );
+                      },
                       child: Text(
                         'En savoir plus',
                         style: GoogleFonts.imprima(color: Colors.white),
