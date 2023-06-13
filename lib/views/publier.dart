@@ -45,7 +45,7 @@ class _PublierPageState extends State<PublierPage> {
       setState(() {
         _selectedDates.add(picked);
         _prjourEditingController.text = _selectedDates
-            .map((date) => DateFormat('dd/MM/yyyy').format(date))
+            .map((date) => DateFormat('dd/MMMM/yyyy').format(date))
             .join(', ');
       });
     }
@@ -80,6 +80,7 @@ class _PublierPageState extends State<PublierPage> {
   var types = [
     'Pizza',
     'Burger',
+    'Italiens',
     'Dessert',
     'Vegetarien',
     'Entree',
@@ -259,7 +260,7 @@ class _PublierPageState extends State<PublierPage> {
               keyboardType: TextInputType.multiline,
               maxLines: 2,
               decoration: InputDecoration(
-                labelText: 'Choisissez une plusieurs dates',
+                labelText: 'Choisissez une ou plusieurs dates',
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -311,14 +312,21 @@ class _PublierPageState extends State<PublierPage> {
             ),
             const SizedBox(height: 5),
             SizedBox(
-                width: screenWidth,
-                height: 50,
-                child: ElevatedButton(
-                  child: const Text("Publier"),
-                  onPressed: () {
-                    _insertDialog();
-                  },
-                )),
+              width: screenWidth,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(46, 88, 123, 100),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: () {
+                  _insertDialog();
+                },
+                child: const Text("Publier"),
+              ),
+            ),
             const SizedBox(height: 10),
           ]),
         ),

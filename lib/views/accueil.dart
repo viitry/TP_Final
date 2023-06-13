@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/profil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,10 +11,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'RepasDetailsPage.dart';
-import 'messages.dart';
+import 'repaspage.dart';
 import 'publier.dart';
-import '../AuthService.dart';
 
 class AccueilPage extends StatefulWidget {
   @override
@@ -21,8 +20,11 @@ class AccueilPage extends StatefulWidget {
 }
 
 class _AccueilPageState extends State<AccueilPage> {
+  //Declare les variables
   String username = '';
+  String searchQuery = '';
 
+  // methode pour recuperer le username stocke avec la methode sharedPref
   Future<void> _getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedUsername = prefs.getString('username');
@@ -31,6 +33,7 @@ class _AccueilPageState extends State<AccueilPage> {
     });
   }
 
+  // Stock la variable username avec setState
   @override
   initState() {
     super.initState();
@@ -43,9 +46,17 @@ class _AccueilPageState extends State<AccueilPage> {
       backgroundColor: Color.fromRGBO(241, 249, 255, 1),
       body: ListView(
         children: [
-          SearchSection(),
+          SearchSection(
+            onSearch: (query) {
+              setState(() {
+                searchQuery = query; // Mets à jour la valeur de searchQuery
+              });
+            },
+          ),
           CategorySection(),
-          RepasSection(),
+          RepasSection(
+              searchQuery:
+                  searchQuery), // Passe la valeur de searchQuery à RepasSection
         ],
       ),
       floatingActionButton: Column(
@@ -64,13 +75,16 @@ class _AccueilPageState extends State<AccueilPage> {
           ),
         ],
       ),
-      drawer: Drawer(),
     );
   }
 }
 
 class SearchSection extends StatelessWidget {
-  final AuthService authService = AuthService.instance;
+  final ValueChanged<String>
+      onSearch; // Ajout de la fonction de rappel onSearch
+
+  SearchSection({required this.onSearch});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,8 +103,7 @@ class SearchSection extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => MessagePage()),
+                          MaterialPageRoute(builder: (context) => ProfilPage()),
                         );
                       },
                       backgroundColor: Color.fromARGB(176, 92, 134, 153),
@@ -118,6 +131,7 @@ class SearchSection extends StatelessWidget {
                   height: 40,
                   child: Flexible(
                     child: TextField(
+                      onChanged: onSearch,
                       decoration: InputDecoration(
                         hintText: 'Rechercher un plat, une ville ...',
                         hintStyle: GoogleFonts.imprima(fontSize: 13),
@@ -181,6 +195,7 @@ class _CategorySectionState extends State<CategorySection> {
                 buildCategoryButton("Burger", context),
                 buildCategoryButton("Dessert", context),
                 buildCategoryButton("Végétarien", context),
+                buildCategoryButton("Italiens", context),
               ],
             ),
           ),
@@ -196,8 +211,7 @@ class _CategorySectionState extends State<CategorySection> {
         margin: const EdgeInsets.only(right: 15),
         child: GestureDetector(
           onTap: () {
-            fetchRepasByCategory(
-                categoryName, context); // Pass the context here
+            getRepasByCategory(categoryName, context);
           },
           child: Text(
             categoryName,
@@ -206,7 +220,7 @@ class _CategorySectionState extends State<CategorySection> {
         ));
   }
 
-  void fetchRepasByCategory(String category, BuildContext context) async {
+  void getRepasByCategory(String category, BuildContext context) async {
     final response = await http.get(Uri.parse(
         'http://192.168.1.93/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
     if (response.statusCode == 200) {
@@ -214,15 +228,19 @@ class _CategorySectionState extends State<CategorySection> {
       final repasList =
           data.map((repas) => Map<String, dynamic>.from(repas)).toList();
       setState(() {
-        this.repasList = repasList; // Set the state of this widget
+        this.repasList = repasList;
       });
     } else {
-      print('Failed to fetch repas data');
+      print('Erreur pour trouver repas data');
     }
   }
 }
 
 class RepasSection extends StatefulWidget {
+  final String searchQuery; // Ajout de la variable searchQuery
+
+  RepasSection({required this.searchQuery});
+
   @override
   _RepasSectionState createState() => _RepasSectionState();
 }
@@ -231,9 +249,9 @@ class _RepasSectionState extends State<RepasSection> {
   List<Map<String, dynamic>> repasList = [];
   //final _scrollController = ScrollController();
 
-  Future<void> fetchRepasData() async {
+  Future<void> getRepasData() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.93/flutter_application_1/php/loadproducts.php'));
+        'http://192.168.1.93/flutter_application_1/php/load_products.php'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -243,7 +261,7 @@ class _RepasSectionState extends State<RepasSection> {
             data.map((repas) => Map<String, dynamic>.from(repas)).toList();
       });
     } else {
-      print('Failed to fetch repas data');
+      print('Erreur pour trouver repas data');
     }
   }
 
@@ -256,19 +274,29 @@ class _RepasSectionState extends State<RepasSection> {
   @override
   void initState() {
     super.initState();
-    fetchRepasData();
+    getRepasData();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Filtrer les repas en fonction de la recherche
+    List<Map<String, dynamic>> filteredRepasList = repasList.where((repas) {
+      final String title = repas['product_titre'].toLowerCase();
+      final String location = repas['product_lieu'].toLowerCase();
+
+      // Vérifier si le titre ou l'emplacement contiennent la recherche
+      return title.contains(widget.searchQuery) ||
+          location.contains(widget.searchQuery);
+    }).toList();
+
     return Column(
       children: [
         ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: repasList.length,
+          itemCount: filteredRepasList.length, // Utiliser la liste filtrée
           itemBuilder: (context, index) {
-            final repas = repasList[index];
+            final repas = filteredRepasList[index];
             return RepasCard(repas);
           },
         ),

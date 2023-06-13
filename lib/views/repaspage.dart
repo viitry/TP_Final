@@ -6,9 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
-
 import 'chatbox.dart';
 
 class RepasDetailsPage extends StatefulWidget {
@@ -23,70 +20,16 @@ class RepasDetailsPage extends StatefulWidget {
 class _RepasDetailsPageState extends State<RepasDetailsPage> {
   Map<String, dynamic> productDetails = {};
 
-  Future<String> commanderPlat(int productID) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String username = prefs.getString('username') ?? '';
-    String token = prefs.getString('token') ?? '';
-
-    final response = await http.post(
-      Uri.parse(
-          'http://192.168.1.93/flutter_application_1/php/commanderPlat.php'),
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
-      body: {
-        "username": username,
-        "productID": productID.toString(),
-        "token": token,
-      },
-    );
-    if (response.statusCode == 200) {
-      sendEmailToSeller(widget.repasData['username'], "Nouvelle commande",
-          "L'utilisateur $username souhaite acheter un de vos repas '${widget.repasData['product_titre']}'");
-    }
-
-    return response.body;
-  }
-
-  Future<void> sendEmailToSeller(
-      String productUsername, String subject, String message) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token') ?? '';
-
-    final response = await http.post(
-      Uri.parse(
-          'http://192.168.1.93/flutter_application_1/php/getUserInfos.php'),
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
-      body: {
-        "username": productUsername,
-        "token": token,
-      },
-    );
-
-    final result = jsonDecode(response.body);
-
-    if (result != null &&
-        result['success'] == true &&
-        result['user'] != null &&
-        result['user']['email'] != null) {
-      String sellerEmail = result['user']['email'];
-
-      // Envoyer l'e-mail au vendeur en utilisant l'adresse e-mail de l'utilisateur connecté comme expéditeur
-      // ...
-    } else {
-      // Afficher un message d'erreur
-      // ...
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    fetchProduct();
+    getProduct();
   }
 
-  Future<void> fetchProduct() async {
+  Future<void> getProduct() async {
     try {
       final int productId = widget.repasData['user_id'];
-      final details = await fetchProductDetails(productId);
+      final details = await getProductDetails(productId);
       setState(() {
         productDetails = details;
       });
@@ -96,7 +39,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
     }
   }
 
-  Future<Map<String, dynamic>> fetchProductDetails(int id) async {
+  Future<Map<String, dynamic>> getProductDetails(int id) async {
     final url =
         'http:192.168.1.94/flutter_application_1/php/get_products_details.php?id=$id';
 
@@ -107,7 +50,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
       final Map<String, dynamic> responseData = json.decode(response.body);
       return responseData;
     } else {
-      throw Exception('Failed to fetch product details');
+      throw Exception('Erreur pour trouver les details du repas');
     }
   }
 
@@ -345,8 +288,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ChatPage(
-                          receiverUsername: widget.repasData[
-                              'username'], // Remplacer par le pseudo de l'utilisateur qui a publié l'annonce
+                          receiverUsername: widget.repasData['username'],
                         ),
                       ),
                     );

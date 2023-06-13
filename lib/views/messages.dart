@@ -45,7 +45,6 @@ class _MessagePageState extends State<MessagePage> {
           return ListTile(
             title: Text(messages[index].sender),
             subtitle: Text(messages[index].message),
-            // Vous pouvez afficher d'autres détails du message ici
           );
         },
       ),

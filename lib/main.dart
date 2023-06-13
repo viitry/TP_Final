@@ -1,13 +1,10 @@
 // ignore_for_file: equal_keys_in_map
 
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart' as http;
 import 'views/inscription.dart';
 import 'views/connexion.dart';
 import 'views/accueil.dart';
 import 'profil.dart';
-
-import 'test.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +25,6 @@ class MyApp extends StatelessWidget {
         '/connexion': (context) => const ConnexionPage(),
         '/accueil': (context) => AccueilPage(),
         '/profil': (context) => ProfilPage(),
-        '/test': (context) => TestPage(),
       },
     );
   }
@@ -63,18 +59,6 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('Accueil'),
             ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/profil');
-            //   },
-            //   child: Text('Profil'),
-            //),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/test');
-            //   },
-            //   child: Text('test'),
-            // )
           ],
         ),
       ),

@@ -78,19 +78,16 @@ class _ConnexionPageState extends State<ConnexionPage> {
                   height: 150.0,
                 ),
                 SizedBox(height: 15),
-                // Bonjour
                 Text('Bonjour !',
                     style: GoogleFonts.bebasNeue(
                       fontSize: 50,
                     )),
                 SizedBox(height: 10),
-
                 Text(
                   'Connectez-vous pour découvrir de delicieux plats!',
                   style: GoogleFonts.imprima(fontSize: 18),
                 ),
                 SizedBox(height: 35),
-
                 Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +145,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                 height: 27.0,
                               ),
 
-                              // Bouton Se connecter
+                              // Bouton pour se connecter
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0),
@@ -177,7 +174,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                                 height: 5,
                               ),
 
-                              // Texte Pas Membre Cree un compte
+                              // Texte "Pas Membre Cree un compte"
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

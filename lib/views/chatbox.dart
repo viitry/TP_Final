@@ -14,8 +14,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController messageController = TextEditingController();
-  String?
-      senderUsername; // Pseudo de l'utilisateur connecté (récupéré via SharedPreferences)
+  String? senderUsername; // Pseudo de l'utilisateur connecté
   String? receiverUsername; // Pseudo de l'utilisateur qui a publié l'annonce
   List<String> chatMessages = [];
 
