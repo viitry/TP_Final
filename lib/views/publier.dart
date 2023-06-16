@@ -18,6 +18,7 @@ class PublierPage extends StatefulWidget {
 class _PublierPageState extends State<PublierPage> {
   late String username;
 
+  //recupere le username de l'utilisateru connecte
   Future<void> _getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedUsername = prefs.getString('username');
@@ -28,9 +29,11 @@ class _PublierPageState extends State<PublierPage> {
     }
   }
 
+  // liste pour stocker les dates selectionnees
   List<DateTime> _selectedDates = [];
 
   Future<void> _selectDate(BuildContext context) async {
+    //date initialise sur la date actuelle
     DateTime initialDate = DateTime.now();
     if (_selectedDates.isNotEmpty) {
       initialDate = _selectedDates.last;
@@ -57,6 +60,7 @@ class _PublierPageState extends State<PublierPage> {
     _getUsername();
   }
 
+  // On declare nos variables
   late double screenHeight, screenWidth, ctrwidth;
   String pathAsset = 'assets/images/repas.jpeg';
   var _image;
@@ -88,6 +92,7 @@ class _PublierPageState extends State<PublierPage> {
     'Boisson',
   ];
 
+  //Libère les ressources utilisées par les controleurs de texte lorsqu'ils ne sont plus nécessaires
   @override
   void dispose() {
     print("dispose was called");
@@ -123,6 +128,7 @@ class _PublierPageState extends State<PublierPage> {
           child: Column(children: [
             const SizedBox(height: 10),
             Card(
+              // Image, photo
               child: GestureDetector(
                   onTap: () => {_takePictureDialog()},
                   child: SizedBox(
@@ -136,6 +142,8 @@ class _PublierPageState extends State<PublierPage> {
                             ))),
             ),
             const SizedBox(height: 10),
+
+            // Titre
             Container(
               child: TextFormField(
                 controller: _prtitreEditingController,
@@ -152,6 +160,7 @@ class _PublierPageState extends State<PublierPage> {
               ),
             ),
             const SizedBox(height: 5),
+            // Description
             TextFormField(
               controller: _prdescEditingController,
               minLines: 6,
@@ -170,6 +179,8 @@ class _PublierPageState extends State<PublierPage> {
               },
             ),
             const SizedBox(height: 5),
+
+            // Categorie
             Row(
               children: [
                 Expanded(
@@ -206,6 +217,8 @@ class _PublierPageState extends State<PublierPage> {
               ],
             ),
             const SizedBox(height: 5),
+
+            // Prix
             Row(
               children: [
                 Expanded(
@@ -238,6 +251,8 @@ class _PublierPageState extends State<PublierPage> {
               ],
             ),
             const SizedBox(height: 5),
+
+            // Allergene
             TextFormField(
               controller: _prallergieEditingController,
               minLines: 3,
@@ -250,6 +265,8 @@ class _PublierPageState extends State<PublierPage> {
                       borderRadius: BorderRadius.circular(25.0))),
             ),
             const SizedBox(height: 5),
+
+            // Date
             TextFormField(
               controller: _prjourEditingController,
               onTap: () {
@@ -274,6 +291,8 @@ class _PublierPageState extends State<PublierPage> {
               },
             ),
             const SizedBox(height: 5),
+
+            // ville
             TextFormField(
               controller: _prlieuEditingController,
               minLines: 1,
@@ -293,6 +312,8 @@ class _PublierPageState extends State<PublierPage> {
               },
             ),
             const SizedBox(height: 5),
+
+            // Quantite, nombre de personnes
             TextFormField(
               controller: _prinfoEditingController,
               minLines: 2,
@@ -311,6 +332,8 @@ class _PublierPageState extends State<PublierPage> {
               },
             ),
             const SizedBox(height: 5),
+
+            // Bouton publier
             SizedBox(
               width: screenWidth,
               height: 50,
@@ -334,6 +357,7 @@ class _PublierPageState extends State<PublierPage> {
     );
   }
 
+  // Ouvre une boitre de dialogue Gallerie ou Camera
   _takePictureDialog() {
     showDialog(
       context: context,
@@ -363,6 +387,7 @@ class _PublierPageState extends State<PublierPage> {
     );
   }
 
+  // Gallerie
   _galleryPicker() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(
@@ -375,6 +400,7 @@ class _PublierPageState extends State<PublierPage> {
     }
   }
 
+  // Camera
   _cameraPicker() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(
@@ -387,6 +413,7 @@ class _PublierPageState extends State<PublierPage> {
     }
   }
 
+  // boite de dialogue validation publication
   void _insertDialog() {
     if (_formKey.currentState!.validate() && _image != null) {
       _formKey.currentState!.save();
@@ -430,6 +457,7 @@ class _PublierPageState extends State<PublierPage> {
     }
   }
 
+  // Insere le produit
   void _insertProduct() {
     String _prtitre = _prtitreEditingController.text;
     String _prdesc = _prdescEditingController.text;

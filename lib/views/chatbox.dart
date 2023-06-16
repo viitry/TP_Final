@@ -25,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
     receiverUsername = widget.receiverUsername;
   }
 
+  // Récupère le pseudo de l'utilisateur connecté
   Future<void> getSenderUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? username = prefs.getString('username');
@@ -33,6 +34,7 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+  // Envoie d'un message
   Future<void> sendMessage() async {
     String message = messageController.text;
     if (message.isNotEmpty) {
@@ -46,7 +48,8 @@ class _ChatPageState extends State<ChatPage> {
           });
 
       setState(() {
-        chatMessages.add('$senderUsername: $message');
+        chatMessages.add(
+            '$senderUsername: $message'); //Ajoute le message à la liste des messages.
         messageController.clear();
       });
     }

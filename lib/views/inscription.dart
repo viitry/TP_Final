@@ -22,20 +22,20 @@ class _InscriptionPageState extends State<InscriptionPage> {
   TextEditingController repeatpassword = TextEditingController();
 
   Future register(BuildContext context) async {
+    // Vérifie si les champs sont vides
     if (username.text == "" ||
         password.text == "" ||
         repeatpassword.text == "") {
-      // Vérifier si les champs sont vides
       Fluttertoast.showToast(
         msg: "Veuillez remplir tous les champs",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         fontSize: 16.0,
       );
+      // Vérifie les critères du mot de passe
     } else if (password.text.length < 6 ||
         !password.text.contains(RegExp(r'[A-Z]')) ||
         !password.text.contains(RegExp(r'[0-9]'))) {
-      // Vérifier les critères du mot de passe
       Fluttertoast.showToast(
         msg:
             "Le mot de passe doit contenir au moins 6 caractères, une majuscule et un chiffre",
@@ -53,7 +53,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
       );
     } else {
       if (password.text == repeatpassword.text) {
-        var url = "http://localhost/flutter_application_1/php/register.php";
+        var url = "http://192.168.1.93/flutter_application_1/php/register.php";
         var response = await http.post(Uri.parse(url), body: {
           "username": username.text,
           "password": password.text,
@@ -101,8 +101,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
   }
 
   bool _isEmail(String input) {
-    // Expression régulière pour vérifier si le texte correspond au format d'une adresse email
-    // Cette expression régulière n'est pas exhaustive mais couvre les cas courants
+    // Verifie si le format est celui d'une adresse email
     final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     return emailRegex.hasMatch(input);
   }

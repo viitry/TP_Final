@@ -32,7 +32,6 @@ class _ConnexionPageState extends State<ConnexionPage> {
     } else {
       var url = "http://192.168.1.93/flutter_application_1/php/login.php";
       var response = await http.post(Uri.parse(url), body: {
-        // Utilisez les mêmes clés que celles attendues par le script PHP
         "username": username.text,
         "password": password.text,
       });
@@ -45,7 +44,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
             gravity: ToastGravity.CENTER,
             fontSize: 16.0);
 
-        // Stocker le token d'authentification dans SharedPreferences
+        // Stocke le token d'authentification dans SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', data['token']);
         await prefs.setString('username', username.text);

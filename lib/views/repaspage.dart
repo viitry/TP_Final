@@ -11,7 +11,7 @@ import 'chatbox.dart';
 class RepasDetailsPage extends StatefulWidget {
   final Map repasData;
 
-  RepasDetailsPage({required this.repasData});
+  RepasDetailsPage({required this.repasData}); // Map repas avec les donnees
 
   @override
   _RepasDetailsPageState createState() => _RepasDetailsPageState();
@@ -23,7 +23,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
   @override
   void initState() {
     super.initState();
-    getProduct();
+    getProduct(); // Recupere details du produit avec l'id produit
   }
 
   Future<void> getProduct() async {
@@ -39,6 +39,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
     }
   }
 
+  // Requete avec l'id produit
   Future<Map<String, dynamic>> getProductDetails(int id) async {
     final url =
         'http:192.168.1.94/flutter_application_1/php/get_products_details.php?id=$id';

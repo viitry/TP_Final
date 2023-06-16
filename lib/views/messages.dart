@@ -17,7 +17,7 @@ class _MessagePageState extends State<MessagePage> {
   }
 
   Future<void> getMessages() async {
-    // Récupérer les messages de l'utilisateur depuis l'API
+    // Récupére les messages de l'utilisateur depuis l'API
     var response = await http.get(Uri.parse(
         'http://192.168.1.93/flutter_application_1/php/get_messages.php'));
     if (response.statusCode == 200) {
