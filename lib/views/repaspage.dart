@@ -42,7 +42,7 @@ class _RepasDetailsPageState extends State<RepasDetailsPage> {
   // Requete avec l'id produit
   Future<Map<String, dynamic>> getProductDetails(int id) async {
     final url =
-        'http:192.168.1.94/flutter_application_1/php/get_products_details.php?id=$id';
+        'http:192.168.1.92/flutter_application_1/php/get_products_details.php?id=$id';
 
     final response = await http.get(Uri.parse(url));
 
