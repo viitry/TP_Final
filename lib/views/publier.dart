@@ -469,7 +469,7 @@ class _PublierPageState extends State<PublierPage> {
     String base64Image = base64Encode(_image!.readAsBytesSync());
     http.post(
         Uri.parse(
-            "http://192.168.1.93/flutter_application_1/php/new_products.php"),
+            "http://192.168.1.92/flutter_application_1/php/new_products.php"),
         body: {
           "titre": _prtitre,
           "desc": _prdesc,
