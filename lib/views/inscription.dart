@@ -53,7 +53,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
       );
     } else {
       if (password.text == repeatpassword.text) {
-        var url = "http://192.168.1.93/flutter_application_1/php/register.php";
+        var url = "http://192.168.1.92/flutter_application_1/php/register.php";
         var response = await http.post(Uri.parse(url), body: {
           "username": username.text,
           "password": password.text,
