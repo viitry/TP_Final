@@ -222,7 +222,7 @@ class _CategorySectionState extends State<CategorySection> {
 
   void getRepasByCategory(String category, BuildContext context) async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.93/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
+        'http://192.168.1.92/flutter_application_1/php/get_repas_by_category.php?product_categorie=$category'));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       final repasList =
@@ -251,7 +251,7 @@ class _RepasSectionState extends State<RepasSection> {
 
   Future<void> getRepasData() async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.93/flutter_application_1/php/load_products.php'));
+        'http://192.168.1.92/flutter_application_1/php/load_products.php'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
